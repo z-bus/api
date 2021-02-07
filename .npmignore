@@ -1,5 +1,8 @@
-# Lib
-lib/
+# Src
+src/
+
+#Docs
+docs/
 
 #IDE
 .idea/
@@ -24,3 +27,13 @@ node_modules/
 # dotenv environment variables file
 .env
 .env.test
+
+# dotfiles
+.eslintrc.js
+.gitignore
+.npmignore
+.prettierrc.js
+jest.config.js
+tsconfig.json
+typedoc.json
+Z-Bus.png

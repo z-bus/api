@@ -1,0 +1,11 @@
+{
+  "entryPoints": ["src/index.ts"],
+  "includes": ["Z-Bus.png"],
+  "out": "docs",
+  "theme": "minimal",
+  "name": "Z-Bus API",
+  "readme": "./README.md",
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "disableSources": true
+}
