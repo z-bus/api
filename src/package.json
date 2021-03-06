@@ -1,0 +1,32 @@
+{
+  "name": "@z-bus/api",
+  "version": "1.0.3",
+  "description": "Z-Bus types and scripting API for the \"Interface\" IoT smart home device",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./*": "./*",
+    "./operators": "./operators/index.js",
+    "./operators/*": "./operators/*",
+    "./package.json": "./package.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/z-bus/api.git"
+  },
+  "keywords": [
+    "Z-Bus",
+    "smart",
+    "home",
+    "automation"
+  ],
+  "author": "Markus Zimmermann",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/z-bus/api/issues"
+  },
+  "homepage": "https://github.com/z-bus/api#readme",
+  "dependencies": {
+    "rxjs": "^6.6.3"
+  }
+}

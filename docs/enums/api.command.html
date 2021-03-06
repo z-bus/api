@@ -1,0 +1,359 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Command | @z-bus</title>
+	<meta name="description" content="Documentation for @z-bus">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">@z-bus</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../modules.html">@z-bus</a>
+				</li>
+				<li>
+					<a href="../modules/api.html">api</a>
+				</li>
+				<li>
+					<a href="api.command.html">Command</a>
+				</li>
+			</ul>
+			<h1>Enumeration Command</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>A command is a <code>number</code> that is part of all <a href="../classes/api.deviceevent.html">DeviceEvent</a> events which are</p>
+						<ul>
+							<li>transmitted to any smart home <a href="../interfaces/api.device.html">Device</a> over the bus network.</li>
+							<li>received from any smart home <a href="../interfaces/api.device.html">Device</a> over the bus network.</li>
+						</ul>
+					</div>
+					<p>The <em>central device control</em> commands always set devices into a defined state.
+					Hence those are suitable for controlling groups of many devices simultaneously.</p>
+					<p>The <em>single device control</em> are stateless commands which switch devices into an unknown state.
+						Only use these, if you can observe the outcome (e.g. from a button in the same room)
+						or for triggering events (e.g. for setting a scene, or winding a staircase timer up).
+						If you run these commands on groups of devices, they will be out of sync
+					(i.e. some will switch on, others will switch off).</p>
+				</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Central Device Control Enumeration members</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="api.command.html#down" class="tsd-kind-icon">down</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="api.command.html#off" class="tsd-kind-icon">off</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="api.command.html#on" class="tsd-kind-icon">on</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="api.command.html#stop" class="tsd-kind-icon">stop</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="api.command.html#up" class="tsd-kind-icon">up</a></li>
+							</ul>
+							<h3>Single Device Control Enumeration members</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="api.command.html#down_stop" class="tsd-kind-icon">down-<wbr>stop</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="api.command.html#end" class="tsd-kind-icon">end</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="api.command.html#start" class="tsd-kind-icon">start</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="api.command.html#toggle" class="tsd-kind-icon">toggle</a></li>
+								<li class="tsd-kind-enum-member tsd-parent-kind-enum"><a href="api.command.html#up_stop" class="tsd-kind-icon">up-<wbr>stop</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Central Device Control Enumeration members</h2>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="down" class="tsd-anchor"></a>
+					<h3>down</h3>
+					<div class="tsd-signature tsd-kind-icon">down<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 12</span></div>
+					<aside class="tsd-sources">
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Moves one or more directional devices &#39;down&#39; (e.g. blinds)</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="off" class="tsd-anchor"></a>
+					<h3>off</h3>
+					<div class="tsd-signature tsd-kind-icon">off<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 12</span></div>
+					<aside class="tsd-sources">
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Switches one or more switching devices &#39;off&#39; (e.g. lights, heating, ...)</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="on" class="tsd-anchor"></a>
+					<h3>on</h3>
+					<div class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 3</span></div>
+					<aside class="tsd-sources">
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Switches one or more switching devices &#39;on&#39; (e.g. lights, heating, ...)</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="stop" class="tsd-anchor"></a>
+					<h3>stop</h3>
+					<div class="tsd-signature tsd-kind-icon">stop<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 15</span></div>
+					<aside class="tsd-sources">
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Stops the motion of one or more a directional devices (e.g. blinds)</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="up" class="tsd-anchor"></a>
+					<h3>up</h3>
+					<div class="tsd-signature tsd-kind-icon">up<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 3</span></div>
+					<aside class="tsd-sources">
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Moves one or more directional devices &#39;up&#39; (e.g. blinds)</p>
+						</div>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Single Device Control Enumeration members</h2>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="down_stop" class="tsd-anchor"></a>
+					<h3>down-<wbr>stop</h3>
+					<div class="tsd-signature tsd-kind-icon">down-<wbr>stop<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 192</span></div>
+					<aside class="tsd-sources">
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Steps a directional device (e.g. blinds). The device will change</p>
+							<ul>
+								<li>from moving &#39;down&#39; to &#39;stop&#39;</li>
+								<li>from &#39;stop&#39; to moving &#39;down&#39;</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="end" class="tsd-anchor"></a>
+					<h3>end</h3>
+					<div class="tsd-signature tsd-kind-icon">end<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 192</span></div>
+					<aside class="tsd-sources">
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Ends changing the brightness of a dimmer.
+							The device will stop fading its brightness and stick to its current brightness level.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="start" class="tsd-anchor"></a>
+					<h3>start</h3>
+					<div class="tsd-signature tsd-kind-icon">start<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 48</span></div>
+					<aside class="tsd-sources">
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Starts changing the brightness of a dimmer.
+							The device will start slowly fading its brightness until stopped.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="toggle" class="tsd-anchor"></a>
+					<h3>toggle</h3>
+					<div class="tsd-signature tsd-kind-icon">toggle<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 0</span></div>
+					<aside class="tsd-sources">
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Toggles a switching device (e.g. light). The device will switch</p>
+							<ul>
+								<li>from &#39;off&#39; to &#39;on&#39;, or</li>
+								<li>from &#39;on&#39; to &#39;off&#39;</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-enum-member tsd-parent-kind-enum">
+					<a name="up_stop" class="tsd-anchor"></a>
+					<h3>up-<wbr>stop</h3>
+					<div class="tsd-signature tsd-kind-icon">up-<wbr>stop<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol"> = 48</span></div>
+					<aside class="tsd-sources">
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Steps a directional device (e.g. blinds). The device will change</p>
+							<ul>
+								<li>from moving &#39;up&#39; to &#39;stop&#39;, or</li>
+								<li>from &#39;stop&#39; to moving &#39;up&#39;</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../modules.html">Modules</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/api.html">api</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/api_operators.html">api/operators</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-enum tsd-parent-kind-module">
+						<a href="api.command.html" class="tsd-kind-icon">Command</a>
+						<ul>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="api.command.html#down" class="tsd-kind-icon">down</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="api.command.html#down_stop" class="tsd-kind-icon">down-<wbr>stop</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="api.command.html#end" class="tsd-kind-icon">end</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="api.command.html#off" class="tsd-kind-icon">off</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="api.command.html#on" class="tsd-kind-icon">on</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="api.command.html#start" class="tsd-kind-icon">start</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="api.command.html#stop" class="tsd-kind-icon">stop</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="api.command.html#toggle" class="tsd-kind-icon">toggle</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="api.command.html#up" class="tsd-kind-icon">up</a>
+							</li>
+							<li class=" tsd-kind-enum-member tsd-parent-kind-enum">
+								<a href="api.command.html#up_stop" class="tsd-kind-icon">up-<wbr>stop</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/api.deviceevent.html" class="tsd-kind-icon">Device<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/api.dimmerevent.html" class="tsd-kind-icon">Dimmer<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/api.zbus.html" class="tsd-kind-icon">ZBus</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/api.device.html" class="tsd-kind-icon">Device</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/api.sceneevent.html" class="tsd-kind-icon">Scene<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-module">
+						<a href="../modules/api.html#zbus-1" class="tsd-kind-icon">z<wbr>Bus</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

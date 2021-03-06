@@ -1,8 +1,7 @@
 {
-  "entryPoints": ["src/index.ts"],
+  "entryPoints": ["src/index.ts", "src/operators/index.ts"],
   "out": "docs",
-  "theme": "minimal",
-  "name": "Z-Bus API",
+  "name": "@z-bus",
   "readme": "./README.md",
   "excludePrivate": true,
   "excludeInternal": true,

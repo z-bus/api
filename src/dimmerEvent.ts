@@ -27,17 +27,17 @@ export class DimmerEvent extends DeviceEvent {
   set value(value: number | undefined) {
     if (value !== undefined) {
       this._value = Math.max(Math.min(value, 1), 0);
-      if (this.data == undefined) {
-        this.data = new Uint8Array(2);
+      if (this._data == undefined) {
+        this._data = new Uint8Array(2);
       }
-      this.data[1] = Math.round(this._value * 255);
+      this._data[1] = Math.round(this._value * 255);
     } else {
       this._value = undefined;
     }
   }
   get value(): number | undefined {
-    if (this.data) {
-      this._value = this.data[1] / 255;
+    if (this._data) {
+      this._value = this._data[1] / 255;
     }
     return this._value;
   }
@@ -46,21 +46,21 @@ export class DimmerEvent extends DeviceEvent {
   set duration(duration: number | undefined) {
     if (duration !== undefined) {
       this._duration = Math.min(Math.max(duration, 0.04), 160);
-      if (this.data == undefined) {
-        this.data = new Uint8Array(2);
+      if (this._data == undefined) {
+        this._data = new Uint8Array(2);
       }
       if (duration >= 2.55) {
-        this.data[0] |= Math.round(this._duration / 2.55) & 0x7f;
+        this._data[0] |= Math.round(this._duration / 2.55) & 0x7f;
       } else {
-        this.data[0] |= (Math.round(2.55 / this._duration - 1) + 64) & 0x7f;
+        this._data[0] |= (Math.round(2.55 / this._duration - 1) + 64) & 0x7f;
       }
     } else {
       this._duration = undefined;
     }
   }
   get duration(): number | undefined {
-    if (this.data) {
-      const d = this.data[0] & 0x7f;
+    if (this._data) {
+      const d = this._data[0] & 0x7f;
       if (d < 64) {
         this._duration = d * 2.55;
       } else {
@@ -74,17 +74,17 @@ export class DimmerEvent extends DeviceEvent {
   set direction(direction: number | undefined) {
     if (direction !== undefined) {
       this._direction = direction ? 1 : 0;
-      if (this.data == undefined) {
-        this.data = new Uint8Array(2);
+      if (this._data == undefined) {
+        this._data = new Uint8Array(2);
       }
-      this.data[0] |= direction << 7;
+      this._data[0] |= direction << 7;
     } else {
       this._direction = undefined;
     }
   }
   get direction(): number | undefined {
-    if (this.data) {
-      this._direction = this.data[0] & 0x80;
+    if (this._data) {
+      this._direction = this._data[0] & 0x80;
     }
     return this._direction;
   }
