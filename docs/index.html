@@ -65,8 +65,53 @@
 					<img src="https://img.shields.io/github/license/z-bus/api" alt="License">
 					<img src="https://img.shields.io/github/issues/z-bus/api" alt="Issues">
 				<img src="https://img.shields.io/github/followers/z-bus?label=Folllow&style=social" alt="Follow"></p>
-				<p>Z-Bus types and JS scripting documentation for the
-				smart home <a href="https://z-bus.de/produkte/interface">Interface</a> (an IoT gateway device)</p>
+				<a href="#about" id="about" style="color: inherit; text-decoration: none;">
+					<h2>About</h2>
+				</a>
+				<p>This is the JavaScript scripting documentation for automating your home with the <a href="https://www.z-bus.com">Z-Bus</a> smart home <a href="https://z-bus.de/produkte/interface">Interface</a>.</p>
+				<p>The <strong>documentation</strong> of this API is split into modules:</p>
+				<ul>
+					<li>the main <a href="https://z-bus.github.io/api/modules/api.html">api</a> for coding in JavaScript</li>
+					<li>the <a href="https://z-bus.github.io/api/modules/api_operators.html">api/operators</a> for reactive coding with <a href="https://rxjs-dev.firebaseapp.com/guide/overview">RxJS</a></li>
+				</ul>
+				<p>The <strong>sources</strong> of this API are available on <a href="">https://github.com/z-bus/api</a></p>
+				<a href="#hardware-requirements" id="hardware-requirements" style="color: inherit; text-decoration: none;">
+					<h2>Hardware requirements</h2>
+				</a>
+				<ul>
+					<li>You&#39;ll need your home to be <strong>equipped and hard-wired with a Z-Bus smart home system installation</strong>. Please find information about the Z-Bus smart home system on <a href="https://www.z-bus.com">https://www.z-bus.com</a>.</li>
+					<li>You require the <strong><a href="https://z-bus.de/produkte/interface">Interface</a> smart home server and IoT gateway</strong> up and running at your home. It will execute the script and run your automations locally on the device, even without connection to the internet.</li>
+					<li><strong>Internet connectivity</strong> is however recommended for scripting (albeit it is also possible offline)</li>
+				</ul>
+				<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
+					<h2>Getting started</h2>
+				</a>
+				<ol>
+					<li>Open the <code>script</code> from the menu in <a href="https://home.z-bus.com/">Z-Bus Home</a> or refer to <a href="">https://home.z-bus.com/script</a> right away.</li>
+					<li>Enter a &quot;hello world program&quot;<pre><code class="language-js"><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">receive</span><span style="color: #000000">((</span><span style="color: #001080">event</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Hello, device&#039;</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">.</span><span style="color: #001080">address</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
+</code></pre>
+					</li>
+					<li>Press the <code>▶︎</code> arrow in the upper right.</li>
+					<li>Press one of your Z-Bus wall buttons. The console will acknowledge each button press:
+					```</li>
+					<li>03.2021, 16:09:21 [script] Hello, device 0
+					```</li>
+					<li>To start scripting your automations, refer to the <a href="https://z-bus.github.io/api/modules/api.html">API documentation</a> – start from the global <a href="https://z-bus.github.io/api/modules/api.html#zbus-1">zBus</a> object</li>
+				</ol>
+				<a href="#how-it-works" id="how-it-works" style="color: inherit; text-decoration: none;">
+					<h2>How it works</h2>
+				</a>
+				<p>Z-Bus Home supports scripting home automations in standard <code>JavaScript</code>. This is outstandingly documented and supported by the community, an excellent primer into the scripting language can be found in Mozilla&#39;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction">MDN Web Docs</a>.</p>
+				<p>Z-Bus Interface runs the JavaScript runtime <code>Node.js 15.3</code> internally, you&#39;ll find a detailed reference in the <a href="https://nodejs.org/dist/latest-v15.x/docs/api/">Node.js Documentation</a>.</p>
+				<p>The scripting runtime features our open-source library specifically built for Z-Bus smart home system usage via the global variable <code>zBus</code>. Please refer to the <a href="https://z-bus.github.io/api/classes/api.zbus.html">Z-Bus API Documentation</a> for:</p>
+				<ul>
+					<li>Receiving events from and transmitting commands to the Z-Bus smart home system</li>
+					<li>Dimming lights and setting lighting scenes</li>
+					<li>Creating central or conditional control flows</li>
+					<li>Creating timers, schedules, and presence simulations.</li>
+				</ul>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
