@@ -7,6 +7,14 @@ import { Command } from './command';
 import { receive } from './operators';
 import { DimmerDevice } from './dimmerDevice';
 
+import schedule, {
+  Job,
+  JobCallback,
+  RecurrenceRule,
+  RecurrenceSpecDateRange,
+  RecurrenceSpecObjLit,
+} from 'node-schedule';
+
 /**
  * This notifies the caller about incoming Z-Bus communication as used in {@link ZBus.receive}
  * #### Example
@@ -482,5 +490,115 @@ export class ZBus {
       //Subscribe to reception
       this.reception.pipe(receive(address, command)).subscribe(subscriber);
     }
+  }
+
+  /**
+   * A dictionary of all [`node-schedule`](https://github.com/node-schedule/node-schedule) scheduled Jobs, accessible by name.
+   */
+  jobs = schedule.scheduledJobs;
+
+  /**
+   *
+   * @param name
+   * @param rule
+   * @param callback
+   */
+
+  /**
+   * Schedules recurring events and timers as a [`node-schedule`](https://github.com/node-schedule/node-schedule) job.
+   *
+   * #### Cron-style scheduling
+   *
+   * The cron format allows to create complex schedules in a single string, `0 8 * * mon-fri` for example defines "Every weekday at 08:00h".
+   * Such expressions are parsed by [`cron-parser`](https://github.com/harrisiirak/cron-parser) and consists of:
+   * ```text
+   * *    *    *    *    *    *
+   * ┬    ┬    ┬    ┬    ┬    ┬
+   * │    │    │    │    │    └ day of week (0 - 7) (0 or 7 is Sun)
+   * │    │    │    │    └───── month (1 - 12)
+   * │    │    │    └────────── day of month (1 - 31)
+   * │    │    └─────────────── hour (0 - 23)
+   * │    └──────────────────── minute (0 - 59)
+   * └───────────────────────── second (0 - 59, optional)
+   * ```
+   * Field names | Allowed values
+   * --- | ---
+   * second | `0`-`59` (optional)
+   * minute | `0`-`59`
+   * hour | `0`-`23`
+   * day of month | `1`-`31`
+   * month | `1`-`12` where 1 is January, 2 is February, and so on, or `jan`, `feb`, `mar`, `apr`, `may`, `jun`, `jul`, `aug`, `sep`, `oct`, `nov`, or `dec` as three-character strings based on the English name of the month
+   * day of week | `0`-`7` where 0 or 7 is Sunday, 1 is Monday, and so on, or `mon`, `tue`, `wed`, `thu`, `fri`, `sat`, or `sun` as three-character strings based on the English name of the day
+   *
+   * For example, the schedule `30 16 1 1 0` runs on 16:30h on the 1st of January, plus on every Sunday in January.
+   *
+   * #### Ranges and lists
+   *
+   * Ranges are two numbers separated with a `-`. For example, the range `8-11` for an hour field executes at hours 8, 9, 10 and 11.
+   *
+   * A list is a set of numbers or ranges separated by `,`. For example: `1,3,5,7,9` or `8-12,14-18`
+   *
+   * #### Unrestricted range
+   *
+   * A field can contain an asterisk `*`, which represents all possible values.
+   *
+   * For example, the schedule `30 16 1,15 * *` executes at 16:30 on the 1st and 15th of each month.
+   *
+   * #### Step values
+   *
+   * Step values can be defined by `first-last/step` and define a range and an execution interval. For example, to specify command execution every other hour, use `0-23/2`. This is equivalent to `0,2,4,6,8,10,12,14,16,18,20,22`.
+   *
+   * If you specify `*∕step` the schedule will execute at any step interval. For example, the expression `*∕2` will also execute every other hour.
+   *
+   * #### Cron examples
+   *
+   * Schedule | Expression
+   * --- | ---
+   * 14:10 every Monday | `10 14 * * 1`
+   * Every day at midnight | `0 0 * * *`
+   * Every weekday at midnight | `0 0 * * 1-5`
+   * Midnight on 1st and 15th day of the month | `0 0 1,15 * *`
+   * 18.32 on the 17th, 21st and 29th of November plus each Monday and Wednesday in November each year | `32 18 17,21,29 11 mon,wed`
+   *
+   * #### Example
+   * ```
+   * zBus.schedule('0 8 * * mon-fri', () => {
+   *   //Blinds up every weekday morning at 08:00h
+   *   zBus.transmit([10, 11, 12, 13, 14, 15], 'up');
+   * });
+   * ```
+   *
+   * @param rule scheduling info
+   * @param callback callback to be executed on each invocation
+   */
+  schedule(
+    rule: RecurrenceRule | RecurrenceSpecDateRange | RecurrenceSpecObjLit | Date | string | number,
+    callback: JobCallback,
+  ): Job;
+
+  /**
+   * Schedules recurring events and timers as a [`node-schedule`](https://github.com/node-schedule/node-schedule) job.
+   *
+   * @param name name for the new Job
+   * @param rule scheduling info
+   * @param callback callback to be executed on each invocation
+   */
+  schedule(
+    name: string,
+    rule: RecurrenceRule | RecurrenceSpecDateRange | RecurrenceSpecObjLit | Date | string | number,
+    callback: JobCallback,
+  ): Job;
+
+  /**
+   * @ignore
+   */
+  schedule(...args: any[]): Job {
+    if (args.length === 2) {
+      return schedule.scheduleJob(args[0], args[1]);
+    }
+    if (args.length === 3) {
+      return schedule.scheduleJob(args[0], args[1], args[2]);
+    }
+    throw new Error('Wrong arguments');
   }
 }

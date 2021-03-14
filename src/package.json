@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/z-bus/api#readme",
   "dependencies": {
+    "node-schedule": "^2.0.0",
     "rxjs": "^6.6.6"
   }
 }

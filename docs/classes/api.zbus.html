@@ -102,6 +102,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="api.zbus.html#jobs" class="tsd-kind-icon">jobs</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="api.zbus.html#reception" class="tsd-kind-icon">reception</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="api.zbus.html#scenes" class="tsd-kind-icon">scenes</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="api.zbus.html#transmission" class="tsd-kind-icon">transmission</a></li>
@@ -113,6 +114,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="api.zbus.html#dim" class="tsd-kind-icon">dim</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="api.zbus.html#receive" class="tsd-kind-icon">receive</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="api.zbus.html#scene" class="tsd-kind-icon">scene</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="api.zbus.html#schedule" class="tsd-kind-icon">schedule</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="api.zbus.html#transmit" class="tsd-kind-icon">transmit</a></li>
 							</ul>
 						</section>
@@ -121,6 +123,26 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="jobs" class="tsd-anchor"></a>
+					<h3>jobs</h3>
+					<div class="tsd-signature tsd-kind-icon">jobs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>A dictionary of all <a href="https://github.com/node-schedule/node-schedule"><code>node-schedule</code></a> scheduled Jobs, accessible by name.</p>
+						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-index-signature">
+								<h5><span class="tsd-signature-symbol">[</span>jobName: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">Job</span></h5>
+							</li>
+						</ul>
+					</div>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="reception" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> reception</h3>
@@ -615,6 +637,173 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="schedule" class="tsd-anchor"></a>
+					<h3>schedule</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">schedule<span class="tsd-signature-symbol">(</span>rule<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RecurrenceRule</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RecurrenceSpecDateRange</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RecurrenceSpecObjLit</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Date</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">JobCallback</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Job</span></li>
+						<li class="tsd-signature tsd-kind-icon">schedule<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, rule<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RecurrenceRule</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RecurrenceSpecDateRange</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RecurrenceSpecObjLit</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Date</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">JobCallback</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Job</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Schedules recurring events and timers as a <a href="https://github.com/node-schedule/node-schedule"><code>node-schedule</code></a> job.</p>
+								</div>
+								<a href="#cron-style-scheduling" id="cron-style-scheduling" style="color: inherit; text-decoration: none;">
+									<h4>Cron-style scheduling</h4>
+								</a>
+								<p>The cron format allows to create complex schedules in a single string, <code>0 8 * * mon-fri</code> for example defines &quot;Every weekday at 08:00h&quot;.
+								Such expressions are parsed by <a href="https://github.com/harrisiirak/cron-parser"><code>cron-parser</code></a> and consists of:</p>
+								<pre><code class="language-text">*    *    *    *    *    *
+┬    ┬    ┬    ┬    ┬    ┬
+│    │    │    │    │    └ day of week (0 - 7) (0 or 7 is Sun)
+│    │    │    │    └───── month (1 - 12)
+│    │    │    └────────── day of month (1 - 31)
+│    │    └─────────────── hour (0 - 23)
+│    └──────────────────── minute (0 - 59)
+└───────────────────────── second (0 - 59, optional)
+</code></pre>
+								<table>
+									<thead>
+										<tr>
+											<th>Field names</th>
+											<th>Allowed values</th>
+										</tr>
+									</thead>
+									<tbody><tr>
+											<td>second</td>
+											<td><code>0</code>-<code>59</code> (optional)</td>
+										</tr>
+										<tr>
+											<td>minute</td>
+											<td><code>0</code>-<code>59</code></td>
+										</tr>
+										<tr>
+											<td>hour</td>
+											<td><code>0</code>-<code>23</code></td>
+										</tr>
+										<tr>
+											<td>day of month</td>
+											<td><code>1</code>-<code>31</code></td>
+										</tr>
+										<tr>
+											<td>month</td>
+											<td><code>1</code>-<code>12</code> where 1 is January, 2 is February, and so on, or <code>jan</code>, <code>feb</code>, <code>mar</code>, <code>apr</code>, <code>may</code>, <code>jun</code>, <code>jul</code>, <code>aug</code>, <code>sep</code>, <code>oct</code>, <code>nov</code>, or <code>dec</code> as three-character strings based on the English name of the month</td>
+										</tr>
+										<tr>
+											<td>day of week</td>
+											<td><code>0</code>-<code>7</code> where 0 or 7 is Sunday, 1 is Monday, and so on, or <code>mon</code>, <code>tue</code>, <code>wed</code>, <code>thu</code>, <code>fri</code>, <code>sat</code>, or <code>sun</code> as three-character strings based on the English name of the day</td>
+										</tr>
+								</tbody></table>
+								<p>For example, the schedule <code>30 16 1 1 0</code> runs on 16:30h on the 1st of January, plus on every Sunday in January.</p>
+								<a href="#ranges-and-lists" id="ranges-and-lists" style="color: inherit; text-decoration: none;">
+									<h4>Ranges and lists</h4>
+								</a>
+								<p>Ranges are two numbers separated with a <code>-</code>. For example, the range <code>8-11</code> for an hour field executes at hours 8, 9, 10 and 11.</p>
+								<p>A list is a set of numbers or ranges separated by <code>,</code>. For example: <code>1,3,5,7,9</code> or <code>8-12,14-18</code></p>
+								<a href="#unrestricted-range" id="unrestricted-range" style="color: inherit; text-decoration: none;">
+									<h4>Unrestricted range</h4>
+								</a>
+								<p>A field can contain an asterisk <code>*</code>, which represents all possible values.</p>
+								<p>For example, the schedule <code>30 16 1,15 * *</code> executes at 16:30 on the 1st and 15th of each month.</p>
+								<a href="#step-values" id="step-values" style="color: inherit; text-decoration: none;">
+									<h4>Step values</h4>
+								</a>
+								<p>Step values can be defined by <code>first-last/step</code> and define a range and an execution interval. For example, to specify command execution every other hour, use <code>0-23/2</code>. This is equivalent to <code>0,2,4,6,8,10,12,14,16,18,20,22</code>.</p>
+								<p>If you specify <code>*∕step</code> the schedule will execute at any step interval. For example, the expression <code>*∕2</code> will also execute every other hour.</p>
+								<a href="#cron-examples" id="cron-examples" style="color: inherit; text-decoration: none;">
+									<h4>Cron examples</h4>
+								</a>
+								<table>
+									<thead>
+										<tr>
+											<th>Schedule</th>
+											<th>Expression</th>
+										</tr>
+									</thead>
+									<tbody><tr>
+											<td>14:10 every Monday</td>
+											<td><code>10 14 * * 1</code></td>
+										</tr>
+										<tr>
+											<td>Every day at midnight</td>
+											<td><code>0 0 * * *</code></td>
+										</tr>
+										<tr>
+											<td>Every weekday at midnight</td>
+											<td><code>0 0 * * 1-5</code></td>
+										</tr>
+										<tr>
+											<td>Midnight on 1st and 15th day of the month</td>
+											<td><code>0 0 1,15 * *</code></td>
+										</tr>
+										<tr>
+											<td>18.32 on the 17th, 21st and 29th of November plus each Monday and Wednesday in November each year</td>
+											<td><code>32 18 17,21,29 11 mon,wed</code></td>
+										</tr>
+								</tbody></table>
+								<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+									<h4>Example</h4>
+								</a>
+								<pre><code><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">schedule</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;0 8 * * mon-fri&#039;</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #008000">//Blinds up every weekday morning at 08:00h</span>
+<span style="color: #000000">  </span><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">transmit</span><span style="color: #000000">([</span><span style="color: #098658">10</span><span style="color: #000000">, </span><span style="color: #098658">11</span><span style="color: #000000">, </span><span style="color: #098658">12</span><span style="color: #000000">, </span><span style="color: #098658">13</span><span style="color: #000000">, </span><span style="color: #098658">14</span><span style="color: #000000">, </span><span style="color: #098658">15</span><span style="color: #000000">], </span><span style="color: #A31515">&#039;up&#039;</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
+</code></pre>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>rule: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RecurrenceRule</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RecurrenceSpecDateRange</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RecurrenceSpecObjLit</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Date</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>scheduling info</p>
+									</div>
+								</li>
+								<li>
+									<h5>callback: <span class="tsd-signature-type">JobCallback</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>callback to be executed on each invocation</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Job</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Schedules recurring events and timers as a <a href="https://github.com/node-schedule/node-schedule"><code>node-schedule</code></a> job.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>name for the new Job</p>
+									</div>
+								</li>
+								<li>
+									<h5>rule: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RecurrenceRule</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RecurrenceSpecDateRange</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RecurrenceSpecObjLit</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Date</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>scheduling info</p>
+									</div>
+								</li>
+								<li>
+									<h5>callback: <span class="tsd-signature-type">JobCallback</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>callback to be executed on each invocation</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Job</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="transmit" class="tsd-anchor"></a>
 					<h3>transmit</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -712,6 +901,9 @@
 						<a href="api.zbus.html" class="tsd-kind-icon">ZBus</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="api.zbus.html#jobs" class="tsd-kind-icon">jobs</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="api.zbus.html#reception" class="tsd-kind-icon">reception</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
@@ -728,6 +920,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="api.zbus.html#scene" class="tsd-kind-icon">scene</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="api.zbus.html#schedule" class="tsd-kind-icon">schedule</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="api.zbus.html#transmit" class="tsd-kind-icon">transmit</a>
