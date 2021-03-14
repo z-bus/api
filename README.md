@@ -2,6 +2,8 @@
 
 ![Z-Bus Home](https://img.shields.io/badge/platform-Z--Bus%20Home%201.0-yellow)
 ![License](https://img.shields.io/github/license/z-bus/api)
+![Keywords](https://img.shields.io/github/package-json/keywords/z-bus/api)
+![Version](https://img.shields.io/npm/v/@z-bus/api)
 ![Issues](https://img.shields.io/github/issues/z-bus/api)
 ![Follow](https://img.shields.io/github/followers/z-bus?label=Folllow&style=social)
 
@@ -13,17 +15,19 @@ The **documentation** of this API is split into modules:
 * the main [api](https://z-bus.github.io/api/modules/api.html) for coding in JavaScript
 * the [api/operators](https://z-bus.github.io/api/modules/api_operators.html) for reactive coding with [RxJS](https://rxjs-dev.firebaseapp.com/guide/overview)
 
-The **sources** of this API are available on [https://github.com/z-bus/api]()
+The **sources** of this API are available on [github.com/z-bus/api](https://github.com/z-bus/api)
+
+The **package** is available on NPM via [`@z-bus/api`](https://www.npmjs.com/package/@z-bus/api)
 
 ## Hardware requirements
 
-* You'll need your home to be **equipped and hard-wired with a Z-Bus smart home system installation**. Please find information about the Z-Bus smart home system on [https://www.z-bus.com](https://www.z-bus.com).
+* You'll need your home to be **equipped and hard-wired with a Z-Bus smart home system installation** available on [z-bus.com](https://www.z-bus.com).
 * You require the **[Interface](https://z-bus.de/produkte/interface) smart home server and IoT gateway** up and running at your home. It will execute the script and run your automations locally on the device, even without connection to the internet.
 * **Internet connectivity** is however recommended for scripting (albeit it is also possible offline)
 
 ## Getting started
 
-1. Open the `script` from the menu in [Z-Bus Home](https://home.z-bus.com/) or refer to [https://home.z-bus.com/script]() right away.
+1. Open the `script` from the menu in [Z-Bus Home](https://home.z-bus.com/) or refer to [home.z-bus.com/script](https://home.z-bus.com/script) directly.
 2. Enter a "hello world program"
 
 ```js
