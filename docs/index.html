@@ -88,16 +88,19 @@
 				</a>
 				<ol>
 					<li>Open the <code>script</code> from the menu in <a href="https://home.z-bus.com/">Z-Bus Home</a> or refer to <a href="">https://home.z-bus.com/script</a> right away.</li>
-					<li>Enter a &quot;hello world program&quot;<pre><code class="language-js"><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">receive</span><span style="color: #000000">((</span><span style="color: #001080">event</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
-<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Hello, device&#039;</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">.</span><span style="color: #001080">address</span><span style="color: #000000">);</span>
+					<li>Enter a &quot;hello world program&quot;</li>
+				</ol>
+				<pre><code class="language-js"><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">receive</span><span style="color: #000000">((</span><span style="color: #001080">event</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Hello, device&#039;</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">.</span><span style="color: #001080">address</span><span style="color: #000000">);</span>
 <span style="color: #000000">});</span>
 </code></pre>
-					</li>
+				<ol start="3">
 					<li>Press the <code>▶︎</code> arrow in the upper right.</li>
-					<li>Press one of your Z-Bus wall buttons. The console will acknowledge each button press:
-					```</li>
-					<li>03.2021, 16:09:21 [script] Hello, device 0
-					```</li>
+					<li>Press one of your Z-Bus wall buttons. The console will acknowledge each button press:</li>
+				</ol>
+				<pre><code class="language-text">14.03.2021, 16:09:21 [script] Hello, device 0
+</code></pre>
+				<ol start="5">
 					<li>To start scripting your automations, refer to the <a href="https://z-bus.github.io/api/modules/api.html">API documentation</a> – start from the global <a href="https://z-bus.github.io/api/modules/api.html#zbus-1">zBus</a> object</li>
 				</ol>
 				<a href="#how-it-works" id="how-it-works" style="color: inherit; text-decoration: none;">

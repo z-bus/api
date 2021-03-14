@@ -25,16 +25,20 @@ The **sources** of this API are available on [https://github.com/z-bus/api]()
 
 1. Open the `script` from the menu in [Z-Bus Home](https://home.z-bus.com/) or refer to [https://home.z-bus.com/script]() right away.
 2. Enter a "hello world program"
+
 ```js
 zBus.receive((event) => {
   console.log('Hello, device', event.address);
 });
 ```
+
 3. Press the `▶︎` arrow in the upper right.
 4. Press one of your Z-Bus wall buttons. The console will acknowledge each button press:
-```
+
+```text
 14.03.2021, 16:09:21 [script] Hello, device 0
 ```
+
 5. To start scripting your automations, refer to the [API documentation](https://z-bus.github.io/api/modules/api.html) – start from the global [zBus](https://z-bus.github.io/api/modules/api.html#zbus-1) object
 
 ## How it works
