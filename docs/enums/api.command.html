@@ -71,10 +71,10 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>A command is a <code>number</code> that is part of all <a href="../classes/api.deviceevent.html">DeviceEvent</a> events which are</p>
+						<p>A command is a <code>number</code> that is part of all <a href="../classes/api.deviceevent.html">DeviceEvent</a> communication events which are</p>
 						<ul>
-							<li>transmitted to any smart home <a href="../interfaces/api.device.html">Device</a> over the bus network.</li>
-							<li>received from any smart home <a href="../interfaces/api.device.html">Device</a> over the bus network.</li>
+							<li>transmitted to any smart home <a href="../interfaces/api.device.html">Device</a> over the Z-Bus network.</li>
+							<li>received from any smart home <a href="../interfaces/api.device.html">Device</a> over the Z-Bus network.</li>
 						</ul>
 					</div>
 					<p>The <em>central device control</em> commands always set devices into a defined state.
@@ -184,7 +184,7 @@
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Steps a directional device (e.g. blinds). The device will change</p>
+							<p>Steps a directional device (e.g. blinds). The device will alternate</p>
 							<ul>
 								<li>from moving &#39;down&#39; to &#39;stop&#39;</li>
 								<li>from &#39;stop&#39; to moving &#39;down&#39;</li>
@@ -214,7 +214,7 @@
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Starts changing the brightness of a dimmer.
-							The device will start slowly fading its brightness until stopped.</p>
+							The device will start slowly fading its brightness (until stopped).</p>
 						</div>
 					</div>
 				</section>
@@ -226,7 +226,7 @@
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Toggles a switching device (e.g. light). The device will switch</p>
+							<p>Toggles a switching device (e.g. light). The device will alternate</p>
 							<ul>
 								<li>from &#39;off&#39; to &#39;on&#39;, or</li>
 								<li>from &#39;on&#39; to &#39;off&#39;</li>
@@ -242,7 +242,7 @@
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Steps a directional device (e.g. blinds). The device will change</p>
+							<p>Steps a directional device (e.g. blinds). The device will alternate</p>
 							<ul>
 								<li>from moving &#39;up&#39; to &#39;stop&#39;, or</li>
 								<li>from &#39;stop&#39; to moving &#39;up&#39;</li>
@@ -311,7 +311,13 @@
 						<a href="../classes/api.deviceevent.html" class="tsd-kind-icon">Device<wbr>Event</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="../classes/api.dimmerevent.html" class="tsd-kind-icon">Dimmer<wbr>Event</a>
+						<a href="../classes/api.dimmerdata.html" class="tsd-kind-icon">Dimmer<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/api.dimmerdevice.html" class="tsd-kind-icon">Dimmer<wbr>Device</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/api.switchingdevice.html" class="tsd-kind-icon">Switching<wbr>Device</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/api.zbus.html" class="tsd-kind-icon">ZBus</a>
@@ -320,7 +326,19 @@
 						<a href="../interfaces/api.device.html" class="tsd-kind-icon">Device</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/api.deviceeventnotification.html" class="tsd-kind-icon">Device<wbr>Event<wbr>Notification</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/api.receiver.html" class="tsd-kind-icon">Receiver</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="../interfaces/api.sceneevent.html" class="tsd-kind-icon">Scene<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/api.sceneeventnotification.html" class="tsd-kind-icon">Scene<wbr>Event<wbr>Notification</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/api.transmitter.html" class="tsd-kind-icon">Transmitter</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-module">
 						<a href="../modules/api.html#zbus-1" class="tsd-kind-icon">z<wbr>Bus</a>

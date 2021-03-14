@@ -2,13 +2,65 @@ import { Observable, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { DeviceEvent } from './deviceEvent';
-import { Command } from './deviceTypes';
-import { DimmerEvent } from './dimmerEvent';
-import { receive } from './operators/operators';
 import { SceneEvent } from './sceneEvent';
+import { Command } from './command';
+import { receive } from './operators';
+import { DimmerDevice } from './dimmerDevice';
 
 /**
- * [Z-Bus Home](https://home.z-bus.com/) scripting API
+ * This notifies the caller about incoming Z-Bus communication as used in {@link ZBus.receive}
+ * #### Example
+ * Anonymous callback:
+ * ```js
+ * zBus.receive((event) => {
+ *     console.log('Received', event.address, event.command, event.data);
+ * });
+ * ```
+ * Callback with a named function:
+ * ```js
+ * function forwardCommand(event) {
+ *     zBus.transmit([0, 1, 2, 3, 4, 5, 6, 7, 8], event.command);
+ * }
+ * zBus.receive(99, ['on', 'off'], forwardCommand);
+ * ```
+ * Callback skipping the `event` parameter:
+ * ```js
+ * zBus.receive(() => {
+ *     console.log('Something received');
+ * });
+ * ```
+ * @param event The received {@link DeviceEvent} contains address, command, and optional data
+ */
+export interface DeviceEventNotification {
+  (event: DeviceEvent): void;
+}
+
+/**
+ * This notifies the caller about triggered Z-Bus scenes
+ * #### Example
+ * ```js
+ * zBus.scene((scene) => {
+ *     console.log('Scene', scene.name);
+ * });
+ * ```
+ * @param event The received {@link SceneEvent} contains name and id of the called scene
+ */
+export interface SceneEventNotification {
+  (event: SceneEvent): void;
+}
+
+/**
+ * API for the
+ * [Z-Bus Home Script](https://home.z-bus.com/script) environment
+ * which allows you to access and control your Z-Bus smart home system.
+ *
+ * This class is loaded into the runtime and accessible via the global `zBus` object (see {@link zBus})
+ *
+ * #### At a glance
+ * * {@link receive} allows to register callback functions, which get executed upon reception of Z-Bus events
+ * * {@link scene} allows to register callback functions, which get executed through scene buttons in [Z-Bus Home](https://home.z-bus.com)
+ * * {@link transmit} allows to send events to the Z-Bus system
+ * * {@link dim} allows to control the brightness of Z-Bus dimmers
  */
 export class ZBus {
   /**
@@ -17,7 +69,7 @@ export class ZBus {
    * This pushes a [RxJS](https://rxjs-dev.firebaseapp.com/) [Subject](https://rxjs-dev.firebaseapp.com/guide/subject) every time a DeviceEvent
    * is sent from the scripting environment.
    */
-  public transmission!: Subject<DeviceEvent>;
+  public readonly transmission: Subject<DeviceEvent>;
 
   /**
    * [RxJS](https://rxjs-dev.firebaseapp.com/) reception stream.
@@ -38,7 +90,7 @@ export class ZBus {
    *   });
    * ```
    */
-  public reception!: Observable<DeviceEvent>;
+  public readonly reception: Observable<DeviceEvent>;
 
   /**
    * [RxJS](https://rxjs-dev.firebaseapp.com/) scene stream.
@@ -49,30 +101,43 @@ export class ZBus {
    * [Observables](https://rxjs-dev.firebaseapp.com/guide/observable)
    * including all their operators.
    */
-  public scenes!: Observable<SceneEvent>;
+  public readonly scenes: Observable<SceneEvent>;
+
+  private static instance: ZBus;
 
   /**
    * @ignore
    */
-  constructor() {
-    //Empty
+  private constructor(
+    transmission: Subject<DeviceEvent>,
+    reception: Observable<DeviceEvent>,
+    scenes: Observable<SceneEvent>,
+  ) {
+    this.transmission = transmission;
+    this.reception = reception;
+    this.scenes = scenes;
   }
 
   /**
    * @ignore
    */
-  link(
-    transmission?: Subject<DeviceEvent>,
-    reception?: Observable<DeviceEvent>,
-    scenes?: Observable<SceneEvent>,
-  ): void {
-    this.transmission = transmission!;
-    this.reception = reception!;
-    this.scenes = scenes!;
+  public static getInstance(): ZBus {
+    return ZBus.instance;
   }
 
   /**
-   * Transmits an address, {@link Command}, and possibly a data packet to control a bus {@link Device}
+   * @ignore
+   */
+  public static linkInstance(
+    transmission: Subject<DeviceEvent>,
+    reception: Observable<DeviceEvent>,
+    scenes: Observable<SceneEvent>,
+  ): ZBus {
+    return (ZBus.instance = new ZBus(transmission, reception, scenes));
+  }
+
+  /**
+   * Transmits an address, {@link Command}, and possibly a data packet to control a Z-Bus {@link Device}
    * #### Examples
    * Send address 99, command 'on' (e.g. for light)
    *
@@ -98,43 +163,132 @@ export class ZBus {
    * ```js
    * zBus.transmit(5, 'on', [0x03, 0xFF]);
    * ```
-   * @param address One or more addresses of the controlled {@link Device}(s)
-   * @param command Valid {@link Command} or command code (`number` between 0 and 255) to send to the device
+   * @param address One or more addresses of the controlled {@link Device}(s) between `0` and `242`
+   * @param command Valid {@link Command} (name or `number` between `0` and `255`) to send to the device
    * @param data An optional two-bytes data packet. This is an unvalidated transmission, so preferably use {@link dim} instead
    */
   transmit(address: number | Array<number>, command: number | keyof typeof Command, data?: Array<number>): void {
-    //Get command as number
-    const _command: number = typeof command === 'number' ? command : Command[command];
-
     if (typeof address === 'number') {
-      this.transmission.next(new DeviceEvent(address, _command, data));
+      this.transmission.next(new DeviceEvent(address, command, data));
     } else {
       address.forEach((address) => {
-        this.transmission.next(new DeviceEvent(address, _command, data));
+        this.transmission.next(new DeviceEvent(address, command, data));
       });
     }
   }
 
   /**
-   * Dims a device
-   * @param address The address of the dimmable device
-   * @param brightness A value between 0.0 and 1.0 represents the brightness in %
-   * @param [duration = 8] A value between 0.04 and 160 represents the duration of a full dimming ramp (from 0 to 100%) in seconds
+   * Dims a Z-Bus {@link Device}
+   *
+   * #### Examples
+   * ```js
+   * zBus.dim(1, 0.0); // Fade to 0% brightness - off
+   * zBus.dim(1, 0.5); // Fade to 50% brightness - off
+   * zBus.dim(1, 1.0); // Fade 100% brightness - on
+   *
+   * zBus.dim(1, 0.0, 0.04); // Instant off
+   * zBus.dim(1, 1.0, 160); // Slow "sunrise" fade on within 160 s
+   *
+   * zBus.dim([1, 2, 3], 0.5); // Dim multiple lights
+   * ```
+   *
+   * @param address One or more addresses of the controlled dimmer(s) between `0` and `242`
+   * @param brightness The brightness between `0.0` and `1.0` %
+   * @param duration Duration of a full dimming ramp (from 0 to 100%) between `0.04` and `160` seconds
    */
-  dim(address: number, brightness: number, duration?: number): void {
-    this.transmission.next(DimmerEvent.dim(address, 3, brightness, duration));
+  dim(address: number | number[], brightness: number, duration = 8): void {
+    if (typeof address === 'number') {
+      this.transmission.next(DimmerDevice.createEvent(address, brightness, duration));
+    } else {
+      address.forEach((address) => {
+        this.transmission.next(DimmerDevice.createEvent(address, brightness, duration));
+      });
+    }
   }
 
+  /**
+   * Sets a scene, when the corresponding {@link SceneEvent} scene button in the app is pressed
+   *
+   * This is useful for triggering scenes from the app.
+   *
+   * #### Example
+   * ```js
+   * zBus.scene('Movie', () => {
+   *    //This scene is triggered when pressing the button named "Movie" in the app
+   *    zBus.transmit(4, 'off'); //Switch the main light off
+   *    zBus.dim([5, 6], 0.2); //Dim both ambient lights to 20%
+   * });
+   * ```
+   * @param name {@link SceneEvent}s matching this name (or this id) execute this scene
+   * @param callback This callback function defines the scene to be executed
+   */
+  scene(name: string, callback: SceneEventNotification): void;
+
+  /**
+   * Sets a scene, when
+   *  * the corresponding {@link SceneEvent} scene button in the app is pressed, or
+   *  * when an {@link DeviceEvent} event from a physical button is received
+   *
+   * This is useful for triggering scenes both from the app and from a wall switch.
+   *
+   * #### Example
+   * ```js
+   * zBus.scene('Movie', 3, () => {
+   *    //This scene is triggered
+   *    // * when pressing the button named "Movie" in the app
+   *    // * when pushing the physical button attached to the sender address 3, command 'toggle'
+   *    zBus.transmit(4, 'off'); //Switch the main light off
+   *    zBus.dim([5, 6], 0.2); //Dim both ambient lights to 20%
+   * });
+   * ```
+   * @param name {@link SceneEvent}s matching this name (or this id) execute this scene, or
+   * @param address {@link DeviceEvent}s received on this address (or any of these addresses) between `0` and `242` execute this scene
+   * @param callback This callback function defines the scene
+   */
+  scene(name: string, address: number | number[], callback: SceneEventNotification): void;
+
+  /**
+   * Sets a scene, when
+   *  * the corresponding {@link SceneEvent} scene button in the app is pressed, or
+   *  * when an {@link DeviceEvent} event from a physical button is received
+   *
+   * This is useful for triggering scenes both from the app and from a wall switch.
+   *
+   * #### Example
+   * ```js
+   * zBus.scene('Movie', 3, 'toggle', () => {
+   *    //This scene is triggered
+   *    // * when pressing the button named "Movie" in the app
+   *    // * when pushing the physical button attached to the sender address 3, command 'toggle'
+   *    zBus.transmit(4, 'off'); //Switch the main light off
+   *    zBus.dim([5, 6], 0.2); //Dim both ambient lights to 20%
+   * });
+   * ```
+   * @param name {@link SceneEvent}s matching this name (or this id) execute this scene, or
+   * @param address {@link DeviceEvent}s received on this address (or any of these addresses) between `0` and `242` execute this scene, in combination with
+   * @param command {@link DeviceEvent}s received matching this {@link Command} (name or `number` between `0` and `255`) or any of these commands execute this scene
+   * @param callback This callback function defines the scene to be executed
+   */
+  scene(
+    name: string,
+    address: number | number[],
+    command: number | keyof typeof Command | Array<number | keyof typeof Command>,
+    callback: SceneEventNotification,
+  ): void;
+
+  /**
+   * This defines the pipes and callbacks for all the above declarations
+   * @ignore */
   scene(...args: any[]): void {
     if (args.length == 1) {
       //subscriber
-      const subscriber = args[0];
+      const subscriber: SceneEventNotification = args[0];
       this.scenes.subscribe(subscriber);
     }
     if (args.length == 2) {
       //name, subscriber
       const select = args[0];
-      const subscriber = args[1];
+      const subscriber: SceneEventNotification = args[1];
       this.scenes
         .pipe(filter((scene: SceneEvent) => scene.id === select || scene.name === select))
         .subscribe(subscriber);
@@ -143,8 +297,8 @@ export class ZBus {
       //name, address, subscriber
       const select = args[0];
       const address = args[1];
-      const subscriber = args[2];
-      this.reception.pipe(filter((event) => event.address == address)).subscribe(subscriber);
+      const subscriber: SceneEventNotification = args[2];
+      this.reception.pipe(receive(address)).subscribe(() => subscriber({ name: select, id: 'undefined' }));
       this.scenes
         .pipe(filter((scene: SceneEvent) => scene.id === select || scene.name === select))
         .subscribe(subscriber);
@@ -152,18 +306,10 @@ export class ZBus {
     if (args.length == 4) {
       //name, address, command, subscriber
       const select = args[0];
-      const address = args[1];
-      const transition: number | keyof typeof Command = args[2];
-      let command: number;
-      if (typeof transition === 'number') {
-        command = transition;
-      } else {
-        command = Command[transition];
-      }
-      const subscriber = args[3];
-      this.reception
-        .pipe(filter((event) => event?.address === address && event?.command === command))
-        .subscribe(subscriber);
+      const address: number | number[] = args[1];
+      const command: number | number[] | Command | Array<number | keyof typeof Command> = args[2];
+      const subscriber: SceneEventNotification = args[3];
+      this.reception.pipe(receive(address, command)).subscribe(() => subscriber({ name: select, id: 'undefined' }));
       this.scenes
         .pipe(filter((scene: SceneEvent) => scene.id === select || scene.name === select))
         .subscribe(subscriber);
@@ -171,57 +317,169 @@ export class ZBus {
   }
 
   /**
-   * Notifies each bus transmission
-   * @param callback Notification of reception including address, command, and optionally data
-   */
-  receive(callback: (event: DeviceEvent) => void): void;
-  /**
-   * Notifies each bus transmission of a matching address
-   * @param address The device address. It filters all transmissions by this address.
-   * @param callback Notification of reception including address, command, and optionally data
-   */
-  receive(address: number, callback: (event: DeviceEvent) => void): void;
-  /**
-   * Notifies each bus transmission of a matching address
-   * @param address The device address. It filters all transmissions by this address.
-   * @param callback Notification of reception including address, command, and optionally data
-   */
-  receive(address: number[], callback: (event: DeviceEvent) => void): void;
-  /**
-   * Notifies each bus transmission of a matching address and command
-   * @param address The device address. It filters all transmissions by this address.
-   * @param command The command. It filters all transmissions by this command.
-   * @param callback Notification of reception including address, command, and optionally data
+   * Notifies of incoming communication from a Z-Bus {@link Device}
+   *  * Calls user-defined code upon reception to inform about the received {@link DeviceEvent}
+   *
+   * This is useful for general Z-Bus system monitoring.
+   *
+   * #### Example
+   *
+   * Notifies of all received Z-Bus events:
+   *
+   * ```js
+   * zBus.receive((event) => {
+   *    //This triggers for any reception
+   *    console.log('Received', event.address, event.command);
+   * });
+   * ```
+   *
+   * @param callback This function is called when an event is received from the Z-Bus network. The notification contains the received {@link DeviceEvent} including address, command, and possibly a data packet
    *
    */
-  receive(address: number, command: number | keyof typeof Command, callback: (event: DeviceEvent) => void): void;
+  receive(callback: DeviceEventNotification): void;
+
   /**
-   * Notifies each bus transmission of a matching address and command
-   * @param address The device address. It filters all transmissions by this address.
-   * @param command The command. It filters all transmissions by this command.
-   * @param callback Notification of reception including address, command, and optionally data
+   * Notifies of incoming communication from a Z-Bus {@link Device}
+   *  * Filters receptions by a matching addresses
+   *  * Calls user-defined code upon reception to inform about the received {@link DeviceEvent}
+   *
+   * This is useful for triggering central automations or scenes from a button.
+   *
+   * #### Example
+   *
+   * Both variations notify of any Z-Bus receptions of devices set to address `80`:
+   *
+   * ```js
+   * zBus.receive(80, (event) => {
+   *    //This triggers for a reception of any command on the address 80
+   *    //Address and command are passed via the event
+   *    console.log('Received on address', event.address, event.command);
+   * });
+   * zBus.receive(80, () => {
+   *    //This triggers for a reception of any command on the address 80
+   *    console.log('Triggered on address 80');
+   * });
+   * ```
+   * @param address Only events matching this address between `0` and `242` are received
+   * @param callback This function is called when an event is received from the Z-Bus network. The notification contains the received {@link DeviceEvent} including address, command, and possibly a data packet
+   *
+   */
+  receive(address: number, callback: DeviceEventNotification): void;
+
+  /**
+   * Notifies of incoming communication from a Z-Bus {@link Device}
+   *  * Filters receptions by one or more matching addresses
+   *  * Calls user-defined code upon reception to inform about the received {@link DeviceEvent}
+   *
+   * This is useful for triggering similar scenes from different buttons, and for grouping single
+   * devices together.
+   *
+   * #### Example
+   * ```js
+   * zBus.receive([79, 80], (event) => {
+   *    //This triggers for a reception of any command on either address 79 or 80
+   *    console.log('Received on address', event.address);
+   * });
+   * ```
+   *
+   * @param address Only events matching any of these addresses between `0` and `242` are received
+   * @param callback This function is called when an event is received from the Z-Bus network. The notification contains the received {@link DeviceEvent} including address, command, and possibly a data packet
+   *
+   */
+  receive(address: number[], callback: DeviceEventNotification): void;
+
+  /**
+   * Notifies of incoming communication from a Z-Bus {@link Device}
+   *  * Filters receptions by a matching address and {@link Command}
+   *  * Calls user-defined code upon reception to inform about the received {@link DeviceEvent}
+   *
+   * This is useful for triggering automations with hardware buttons (e.g., for triggering
+   * a scene on top of a 'toggle' button press) or for piggybacking automation on top of devices
+   * which are individually switched by *single device control* {@link Command}s
+   * (e.g. implementing a staircase light group)
+   *
+   * #### Example
+   *
+   * Notifies of received combinations of address `1` in combination with the command `toggle`
+   * (or its numeric equivalent `0`)
+   *
+   * ```js
+   * zBus.receive(80, 'toggle', () => {
+   *    //This triggers for a reception of 'toggle' on address 80
+   *    console.log('Central control button pressed');
+   *    zBus.transmit([1, 2, 3], 'on');
+   * });
+   * zBus.receive(15, 0, () => {
+   *    //This triggers for a reception of command 0 == 'toggle' on address 15
+   *    console.log('Individual button pressed, switching entire group on');
+   *    zBus.transmit([15, 16, 17], 'on');
+   * });
+   * ```
+   *
+   * @param address Only events matching this address between `0` and `242` are received
+   * @param command Only events matching this {@link Command} (name or `number` between `0` and `255`) are received
+   * @param callback This function is called when an event is received from the Z-Bus network. The notification contains the received {@link DeviceEvent} including address, command, and possibly a data packet
+   *
+   */
+  receive(address: number, command: number | keyof typeof Command, callback: DeviceEventNotification): void;
+
+  /**
+   * Notifies of incoming communication from a Z-Bus {@link Device}
+   *  * Filters receptions by one or more matching addresses, and one or more matching {@link Command}s
+   *  * Calls user-defined code upon reception to inform about the received {@link DeviceEvent}
+   *
+   * This is useful for forwarding a specific set of commands to specific devices
+   *
+   * #### Example
+   * ```js
+   * zBus.receive([79, 80], ['toggle', 'on', 'off'], (event) => {
+   *    //This triggers for a reception of the commands 'toggle', 'on', or 'off'
+   *    //on the "central" addresses 79 or 80
+   *    console.log('Received on address', event.address);
+   * });
+   * ```
+   * Forwarding commands to a range of addresses:
+   * ```js
+   * function forwardCommand(event) {
+   *     zBus.transmit([0, 1, 2, 3, 4, 5, 6, 7, 8], event.command);
+   * }
+   * zBus.receive(99, ['on', 'off'], forwardCommand);
+   * ```
+   *
+   * @param address Only events matching this address or any of these addresses between `0` and `242` are received
+   * @param command Only events matching this {@link Command} (name or `number` between `0` and `255`) or any of these commands are received
+   * @param callback This function is called when an event is received from the Z-Bus network. The notification contains the received {@link DeviceEvent} including address, command, and possibly a data packet
    *
    */
   receive(
     address: number | number[],
     command: number | keyof typeof Command | Array<number | keyof typeof Command>,
-    callback: (event: DeviceEvent) => void,
+    callback: DeviceEventNotification,
   ): void;
 
+  /**
+   * This defines the pipes and callbacks for all the above declarations
+   * @ignore */
   receive(...args: any[]): void {
-    if (args.length == 1) {
-      const subscriber = args[0];
+    if (args.length === 1) {
+      //Map the parameters
+      const subscriber: DeviceEventNotification = args[0];
+      //Subscribe to reception
       this.reception.subscribe(subscriber);
     }
-    if (args.length == 2) {
-      const address = args[0];
-      const subscriber = args[1];
+    if (args.length === 2) {
+      //Map the parameters
+      const address: number | number[] = args[0];
+      const subscriber: DeviceEventNotification = args[1];
+      //Subscribe to reception
       this.reception.pipe(receive(address)).subscribe(subscriber);
     }
-    if (args.length == 3) {
-      const address = args[0];
+    if (args.length === 3) {
+      //Map the parameters
+      const address: number | number[] = args[0];
       const command: number | number[] | Command | Array<number | keyof typeof Command> = args[1];
-      const subscriber = args[2];
+      const subscriber: DeviceEventNotification = args[2];
+      //Subscribe to reception
       this.reception.pipe(receive(address, command)).subscribe(subscriber);
     }
   }

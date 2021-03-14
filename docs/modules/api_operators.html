@@ -99,13 +99,32 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Filter <a href="../classes/api.deviceevent.html">DeviceEvent</a>s emitted by the source Observable by only this address and/or command</p>
+								</div>
+								<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+									<h4>Example</h4>
+								</a>
+								<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">receive</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;@z-bus/api/operators&#039;</span><span style="color: #000000">);</span>
+<span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #001080">reception</span><span style="color: #000000">.</span><span style="color: #795E26">pipe</span><span style="color: #000000">(</span><span style="color: #795E26">receive</span><span style="color: #000000">(</span><span style="color: #098658">80</span><span style="color: #000000">)).</span><span style="color: #795E26">subscribe</span><span style="color: #000000">((</span><span style="color: #001080">event</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Received&#039;</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">.</span><span style="color: #001080">command</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;on address 80&#039;</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
+</code></pre>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> address: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>If an emitted <a href="../classes/api.deviceevent.html">DeviceEvent</a> matches this address (or one of these addresses), it is passed on, and filtered otherwise</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> command: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-symbol">typeof </span><a href="../enums/api.command.html" class="tsd-signature-type" data-tsd-kind="Enumeration">Command</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-symbol">typeof </span><a href="../enums/api.command.html" class="tsd-signature-type" data-tsd-kind="Enumeration">Command</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>If an emitted <a href="../classes/api.deviceevent.html">DeviceEvent</a> matches this command (or one of these commands), it is passed on, and filtered otherwise</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">UnaryFunction</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -122,16 +141,45 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Perform a side transmission for every emission on the source <a href="../classes/api.deviceevent.html">DeviceEvent</a>, but return an <a href="../classes/api.deviceevent.html">DeviceEvent</a> that is identical to the source.</p>
+								</div>
+								<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+									<h4>Example</h4>
+								</a>
+								<p>This implements an automatic staircase timer by using <a href="api_operators.html#receive">receive</a>, <code>transmit</code>, and the RxJS <a href="https://rxjs-dev.firebaseapp.com/api/operators/debounceTime">debounceTime</a> operator.</p>
+								<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">receive</span><span style="color: #000000">, </span><span style="color: #0070C1">transmit</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;@z-bus/api/operators&#039;</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">debounceTime</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;rxjs/operators&#039;</span><span style="color: #000000">);</span>
+<span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #001080">reception</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">pipe</span><span style="color: #000000">(</span>
+<span style="color: #000000">     </span><span style="color: #795E26">receive</span><span style="color: #000000">(</span><span style="color: #098658">99</span><span style="color: #000000">), </span><span style="color: #008000">// when 99 is triggered</span>
+<span style="color: #000000">     </span><span style="color: #795E26">transmit</span><span style="color: #000000">(</span><span style="color: #098658">99</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;on&#039;</span><span style="color: #000000">), </span><span style="color: #008000">// then switch 99 on</span>
+<span style="color: #000000">     </span><span style="color: #795E26">debounceTime</span><span style="color: #000000">(</span><span style="color: #098658">3</span><span style="color: #000000"> * </span><span style="color: #098658">60</span><span style="color: #000000"> * </span><span style="color: #098658">1000</span><span style="color: #000000">), </span><span style="color: #008000">// debounce for 3 minutes</span>
+<span style="color: #000000">     </span><span style="color: #795E26">transmit</span><span style="color: #000000">(</span><span style="color: #098658">99</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;off&#039;</span><span style="color: #000000">) </span><span style="color: #008000">// and switch 99 off (after 3 minutes of silence)</span>
+<span style="color: #000000">  )</span>
+<span style="color: #000000">  .</span><span style="color: #795E26">subscribe</span><span style="color: #000000">();</span>
+</code></pre>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> address: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>One or more addresses of the controlled <a href="../interfaces/api.device.html">Device</a>(s) between <code>0</code> and <code>242</code></p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> command: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><a href="../enums/api.command.html" class="tsd-signature-type" data-tsd-kind="Enumeration">Command</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Valid <a href="../enums/api.command.html">Command</a> (name or <code>number</code> between <code>0</code> and <code>255</code>) to send to the device</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> data: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>An optional two-bytes data packet.</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">UnaryFunction</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>

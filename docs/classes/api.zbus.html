@@ -71,8 +71,20 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p><a href="https://home.z-bus.com/">Z-Bus Home</a> scripting API</p>
+						<p>API for the
+							<a href="https://home.z-bus.com/script">Z-Bus Home Script</a> environment
+						which allows you to access and control your Z-Bus smart home system.</p>
 					</div>
+					<p>This class is loaded into the runtime and accessible via the global <code>zBus</code> object (see <a href="../modules/api.html#zbus-1">zBus</a>)</p>
+					<a href="#at-a-glance" id="at-a-glance" style="color: inherit; text-decoration: none;">
+						<h4>At a glance</h4>
+					</a>
+					<ul>
+						<li><a href="api.zbus.html#receive">receive</a> allows to register callback functions, which get executed upon reception of Z-Bus events</li>
+						<li><a href="api.zbus.html#scene">scene</a> allows to register callback functions, which get executed through scene buttons in <a href="https://home.z-bus.com">Z-Bus Home</a></li>
+						<li><a href="api.zbus.html#transmit">transmit</a> allows to send events to the Z-Bus system</li>
+						<li><a href="api.zbus.html#dim">dim</a> allows to control the brightness of Z-Bus dimmers</li>
+					</ul>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -111,7 +123,7 @@
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="reception" class="tsd-anchor"></a>
-					<h3>reception</h3>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> reception</h3>
 					<div class="tsd-signature tsd-kind-icon">reception<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 					</aside>
@@ -138,7 +150,7 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="scenes" class="tsd-anchor"></a>
-					<h3>scenes</h3>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> scenes</h3>
 					<div class="tsd-signature tsd-kind-icon">scenes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/api.sceneevent.html" class="tsd-signature-type" data-tsd-kind="Interface">SceneEvent</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 					</aside>
@@ -155,7 +167,7 @@
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="transmission" class="tsd-anchor"></a>
-					<h3>transmission</h3>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> transmission</h3>
 					<div class="tsd-signature tsd-kind-icon">transmission<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Subject</span><span class="tsd-signature-symbol">&lt;</span><a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 					</aside>
@@ -174,7 +186,7 @@
 					<a name="dim" class="tsd-anchor"></a>
 					<h3>dim</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">dim<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, brightness<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, duration<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">dim<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span>, brightness<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, duration<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -182,25 +194,40 @@
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Dims a device</p>
+									<p>Dims a Z-Bus <a href="../interfaces/api.device.html">Device</a></p>
 								</div>
+								<a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
+									<h4>Examples</h4>
+								</a>
+								<pre><code class="language-js"><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">dim</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">0.0</span><span style="color: #000000">); </span><span style="color: #008000">// Fade to 0% brightness - off</span>
+<span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">dim</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">0.5</span><span style="color: #000000">); </span><span style="color: #008000">// Fade to 50% brightness - off</span>
+<span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">dim</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">1.0</span><span style="color: #000000">); </span><span style="color: #008000">// Fade 100% brightness - on</span>
+
+<span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">dim</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">0.0</span><span style="color: #000000">, </span><span style="color: #098658">0.04</span><span style="color: #000000">); </span><span style="color: #008000">// Instant off</span>
+<span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">dim</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">1.0</span><span style="color: #000000">, </span><span style="color: #098658">160</span><span style="color: #000000">); </span><span style="color: #008000">// Slow &quot;sunrise&quot; fade on within 160 s</span>
+
+<span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">dim</span><span style="color: #000000">([</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">], </span><span style="color: #098658">0.5</span><span style="color: #000000">); </span><span style="color: #008000">// Dim multiple lights</span>
+</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>address: <span class="tsd-signature-type">number</span></h5>
+									<h5>address: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The address of the dimmable device</p>
+										<p>One or more addresses of the controlled dimmer(s) between <code>0</code> and <code>242</code></p>
 									</div>
 								</li>
 								<li>
 									<h5>brightness: <span class="tsd-signature-type">number</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>A value between 0.0 and 1.0 represents the brightness in %</p>
+										<p>The brightness between <code>0.0</code> and <code>1.0</code> %</p>
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> duration: <span class="tsd-signature-type">number</span></h5>
+									<h5>duration: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 8</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Duration of a full dimming ramp (from 0 to 100%) between <code>0.04</code> and <code>160</code> seconds</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -211,11 +238,11 @@
 					<a name="receive" class="tsd-anchor"></a>
 					<h3>receive</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">receive<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-						<li class="tsd-signature tsd-kind-icon">receive<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-						<li class="tsd-signature tsd-kind-icon">receive<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-						<li class="tsd-signature tsd-kind-icon">receive<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, command<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;toggle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;start&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;end&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;on&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;off&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-						<li class="tsd-signature tsd-kind-icon">receive<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span>, command<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;toggle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;start&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;end&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;on&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;off&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;toggle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;start&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;end&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;on&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;off&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span>, callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">receive<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><a href="../interfaces/api.deviceeventnotification.html" class="tsd-signature-type" data-tsd-kind="Interface">DeviceEventNotification</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">receive<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, callback<span class="tsd-signature-symbol">: </span><a href="../interfaces/api.deviceeventnotification.html" class="tsd-signature-type" data-tsd-kind="Interface">DeviceEventNotification</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">receive<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span>, callback<span class="tsd-signature-symbol">: </span><a href="../interfaces/api.deviceeventnotification.html" class="tsd-signature-type" data-tsd-kind="Interface">DeviceEventNotification</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">receive<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, command<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;toggle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;start&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;end&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;on&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;off&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span>, callback<span class="tsd-signature-symbol">: </span><a href="../interfaces/api.deviceeventnotification.html" class="tsd-signature-type" data-tsd-kind="Interface">DeviceEventNotification</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">receive<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span>, command<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;toggle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;start&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;end&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;on&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;off&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;toggle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;start&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;end&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;on&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;off&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span>, callback<span class="tsd-signature-symbol">: </span><a href="../interfaces/api.deviceeventnotification.html" class="tsd-signature-type" data-tsd-kind="Interface">DeviceEventNotification</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -223,34 +250,29 @@
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Notifies each bus transmission</p>
+									<p>Notifies of incoming communication from a Z-Bus <a href="../interfaces/api.device.html">Device</a></p>
+									<ul>
+										<li>Calls user-defined code upon reception to inform about the received <a href="api.deviceevent.html">DeviceEvent</a></li>
+									</ul>
 								</div>
+								<p>This is useful for general Z-Bus system monitoring.</p>
+								<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+									<h4>Example</h4>
+								</a>
+								<p>Notifies of all received Z-Bus events:</p>
+								<pre><code class="language-js"><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">receive</span><span style="color: #000000">((</span><span style="color: #001080">event</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">   </span><span style="color: #008000">//This triggers for any reception</span>
+<span style="color: #000000">   </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Received&#039;</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">.</span><span style="color: #001080">address</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">.</span><span style="color: #001080">command</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
+</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>callback: <span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
+									<h5>callback: <a href="../interfaces/api.deviceeventnotification.html" class="tsd-signature-type" data-tsd-kind="Interface">DeviceEventNotification</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Notification of reception including address, command, and optionally data</p>
+										<p>This function is called when an event is received from the Z-Bus network. The notification contains the received <a href="api.deviceevent.html">DeviceEvent</a> including address, command, and possibly a data packet</p>
 									</div>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-signature">
-											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>event: <a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -260,40 +282,41 @@
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Notifies each bus transmission of a matching address</p>
+									<p>Notifies of incoming communication from a Z-Bus <a href="../interfaces/api.device.html">Device</a></p>
+									<ul>
+										<li>Filters receptions by a matching addresses</li>
+										<li>Calls user-defined code upon reception to inform about the received <a href="api.deviceevent.html">DeviceEvent</a></li>
+									</ul>
 								</div>
+								<p>This is useful for triggering central automations or scenes from a button.</p>
+								<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+									<h4>Example</h4>
+								</a>
+								<p>Both variations notify of any Z-Bus receptions of devices set to address <code>80</code>:</p>
+								<pre><code class="language-js"><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">receive</span><span style="color: #000000">(</span><span style="color: #098658">80</span><span style="color: #000000">, (</span><span style="color: #001080">event</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">   </span><span style="color: #008000">//This triggers for a reception of any command on the address 80</span>
+<span style="color: #000000">   </span><span style="color: #008000">//Address and command are passed via the event</span>
+<span style="color: #000000">   </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Received on address&#039;</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">.</span><span style="color: #001080">address</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">.</span><span style="color: #001080">command</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
+<span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">receive</span><span style="color: #000000">(</span><span style="color: #098658">80</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">   </span><span style="color: #008000">//This triggers for a reception of any command on the address 80</span>
+<span style="color: #000000">   </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Triggered on address 80&#039;</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
+</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>address: <span class="tsd-signature-type">number</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The device address. It filters all transmissions by this address.</p>
+										<p>Only events matching this address between <code>0</code> and <code>242</code> are received</p>
 									</div>
 								</li>
 								<li>
-									<h5>callback: <span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
+									<h5>callback: <a href="../interfaces/api.deviceeventnotification.html" class="tsd-signature-type" data-tsd-kind="Interface">DeviceEventNotification</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Notification of reception including address, command, and optionally data</p>
+										<p>This function is called when an event is received from the Z-Bus network. The notification contains the received <a href="api.deviceevent.html">DeviceEvent</a> including address, command, and possibly a data packet</p>
 									</div>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-signature">
-											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>event: <a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -303,40 +326,36 @@
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Notifies each bus transmission of a matching address</p>
+									<p>Notifies of incoming communication from a Z-Bus <a href="../interfaces/api.device.html">Device</a></p>
+									<ul>
+										<li>Filters receptions by one or more matching addresses</li>
+										<li>Calls user-defined code upon reception to inform about the received <a href="api.deviceevent.html">DeviceEvent</a></li>
+									</ul>
 								</div>
+								<p>This is useful for triggering similar scenes from different buttons, and for grouping single
+								devices together.</p>
+								<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+									<h4>Example</h4>
+								</a>
+								<pre><code class="language-js"><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">receive</span><span style="color: #000000">([</span><span style="color: #098658">79</span><span style="color: #000000">, </span><span style="color: #098658">80</span><span style="color: #000000">], (</span><span style="color: #001080">event</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">   </span><span style="color: #008000">//This triggers for a reception of any command on either address 79 or 80</span>
+<span style="color: #000000">   </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Received on address&#039;</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">.</span><span style="color: #001080">address</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
+</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>address: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The device address. It filters all transmissions by this address.</p>
+										<p>Only events matching any of these addresses between <code>0</code> and <code>242</code> are received</p>
 									</div>
 								</li>
 								<li>
-									<h5>callback: <span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
+									<h5>callback: <a href="../interfaces/api.deviceeventnotification.html" class="tsd-signature-type" data-tsd-kind="Interface">DeviceEventNotification</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Notification of reception including address, command, and optionally data</p>
+										<p>This function is called when an event is received from the Z-Bus network. The notification contains the received <a href="api.deviceevent.html">DeviceEvent</a> including address, command, and possibly a data packet</p>
 									</div>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-signature">
-											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>event: <a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -346,46 +365,52 @@
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Notifies each bus transmission of a matching address and command</p>
+									<p>Notifies of incoming communication from a Z-Bus <a href="../interfaces/api.device.html">Device</a></p>
+									<ul>
+										<li>Filters receptions by a matching address and <a href="../enums/api.command.html">Command</a></li>
+										<li>Calls user-defined code upon reception to inform about the received <a href="api.deviceevent.html">DeviceEvent</a></li>
+									</ul>
 								</div>
+								<p>This is useful for triggering automations with hardware buttons (e.g., for triggering
+									a scene on top of a &#39;toggle&#39; button press) or for piggybacking automation on top of devices
+									which are individually switched by <em>single device control</em> <a href="../enums/api.command.html">Command</a>s
+								(e.g. implementing a staircase light group)</p>
+								<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+									<h4>Example</h4>
+								</a>
+								<p>Notifies of received combinations of address <code>1</code> in combination with the command <code>toggle</code>
+								(or its numeric equivalent <code>0</code>)</p>
+								<pre><code class="language-js"><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">receive</span><span style="color: #000000">(</span><span style="color: #098658">80</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;toggle&#039;</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">   </span><span style="color: #008000">//This triggers for a reception of &#039;toggle&#039; on address 80</span>
+<span style="color: #000000">   </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Central control button pressed&#039;</span><span style="color: #000000">);</span>
+<span style="color: #000000">   </span><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">transmit</span><span style="color: #000000">([</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">], </span><span style="color: #A31515">&#039;on&#039;</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
+<span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">receive</span><span style="color: #000000">(</span><span style="color: #098658">15</span><span style="color: #000000">, </span><span style="color: #098658">0</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">   </span><span style="color: #008000">//This triggers for a reception of command 0 == &#039;toggle&#039; on address 15</span>
+<span style="color: #000000">   </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Individual button pressed, switching entire group on&#039;</span><span style="color: #000000">);</span>
+<span style="color: #000000">   </span><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">transmit</span><span style="color: #000000">([</span><span style="color: #098658">15</span><span style="color: #000000">, </span><span style="color: #098658">16</span><span style="color: #000000">, </span><span style="color: #098658">17</span><span style="color: #000000">], </span><span style="color: #A31515">&#039;on&#039;</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
+</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>address: <span class="tsd-signature-type">number</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The device address. It filters all transmissions by this address.</p>
+										<p>Only events matching this address between <code>0</code> and <code>242</code> are received</p>
 									</div>
 								</li>
 								<li>
 									<h5>command: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;toggle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;start&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;end&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;on&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;off&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The command. It filters all transmissions by this command.</p>
+										<p>Only events matching this <a href="../enums/api.command.html">Command</a> (name or <code>number</code> between <code>0</code> and <code>255</code>) are received</p>
 									</div>
 								</li>
 								<li>
-									<h5>callback: <span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
+									<h5>callback: <a href="../interfaces/api.deviceeventnotification.html" class="tsd-signature-type" data-tsd-kind="Interface">DeviceEventNotification</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Notification of reception including address, command, and optionally data</p>
+										<p>This function is called when an event is received from the Z-Bus network. The notification contains the received <a href="api.deviceevent.html">DeviceEvent</a> including address, command, and possibly a data packet</p>
 									</div>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-signature">
-											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>event: <a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -395,46 +420,48 @@
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Notifies each bus transmission of a matching address and command</p>
+									<p>Notifies of incoming communication from a Z-Bus <a href="../interfaces/api.device.html">Device</a></p>
+									<ul>
+										<li>Filters receptions by one or more matching addresses, and one or more matching <a href="../enums/api.command.html">Command</a>s</li>
+										<li>Calls user-defined code upon reception to inform about the received <a href="api.deviceevent.html">DeviceEvent</a></li>
+									</ul>
 								</div>
+								<p>This is useful for forwarding a specific set of commands to specific devices</p>
+								<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+									<h4>Example</h4>
+								</a>
+								<pre><code class="language-js"><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">receive</span><span style="color: #000000">([</span><span style="color: #098658">79</span><span style="color: #000000">, </span><span style="color: #098658">80</span><span style="color: #000000">], [</span><span style="color: #A31515">&#039;toggle&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;on&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;off&#039;</span><span style="color: #000000">], (</span><span style="color: #001080">event</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">   </span><span style="color: #008000">//This triggers for a reception of the commands &#039;toggle&#039;, &#039;on&#039;, or &#039;off&#039;</span>
+<span style="color: #000000">   </span><span style="color: #008000">//on the &quot;central&quot; addresses 79 or 80</span>
+<span style="color: #000000">   </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Received on address&#039;</span><span style="color: #000000">, </span><span style="color: #001080">event</span><span style="color: #000000">.</span><span style="color: #001080">address</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
+</code></pre>
+								<p>Forwarding commands to a range of addresses:</p>
+								<pre><code class="language-js"><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">forwardCommand</span><span style="color: #000000">(</span><span style="color: #001080">event</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">transmit</span><span style="color: #000000">([</span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #098658">4</span><span style="color: #000000">, </span><span style="color: #098658">5</span><span style="color: #000000">, </span><span style="color: #098658">6</span><span style="color: #000000">, </span><span style="color: #098658">7</span><span style="color: #000000">, </span><span style="color: #098658">8</span><span style="color: #000000">], </span><span style="color: #001080">event</span><span style="color: #000000">.</span><span style="color: #001080">command</span><span style="color: #000000">);</span>
+<span style="color: #000000">}</span>
+<span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">receive</span><span style="color: #000000">(</span><span style="color: #098658">99</span><span style="color: #000000">, [</span><span style="color: #A31515">&#039;on&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;off&#039;</span><span style="color: #000000">], </span><span style="color: #001080">forwardCommand</span><span style="color: #000000">);</span>
+</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>address: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The device address. It filters all transmissions by this address.</p>
+										<p>Only events matching this address or any of these addresses between <code>0</code> and <code>242</code> are received</p>
 									</div>
 								</li>
 								<li>
 									<h5>command: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;toggle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;start&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;end&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;on&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;off&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;toggle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;start&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;end&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;on&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;off&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>The command. It filters all transmissions by this command.</p>
+										<p>Only events matching this <a href="../enums/api.command.html">Command</a> (name or <code>number</code> between <code>0</code> and <code>255</code>) or any of these commands are received</p>
 									</div>
 								</li>
 								<li>
-									<h5>callback: <span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
+									<h5>callback: <a href="../interfaces/api.deviceeventnotification.html" class="tsd-signature-type" data-tsd-kind="Interface">DeviceEventNotification</a></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Notification of reception including address, command, and optionally data</p>
+										<p>This function is called when an event is received from the Z-Bus network. The notification contains the received <a href="api.deviceevent.html">DeviceEvent</a> including address, command, and possibly a data packet</p>
 									</div>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-signature">
-											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-parameters-title">Parameters</h4>
-													<ul class="tsd-parameters">
-														<li>
-															<h5>event: <a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a></h5>
-														</li>
-													</ul>
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -445,16 +472,142 @@
 					<a name="scene" class="tsd-anchor"></a>
 					<h3>scene</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">scene<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">scene<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">: </span><a href="../interfaces/api.sceneeventnotification.html" class="tsd-signature-type" data-tsd-kind="Interface">SceneEventNotification</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">scene<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span>, callback<span class="tsd-signature-symbol">: </span><a href="../interfaces/api.sceneeventnotification.html" class="tsd-signature-type" data-tsd-kind="Interface">SceneEventNotification</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">scene<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span>, command<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;toggle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;start&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;end&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;on&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;off&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;toggle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;start&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;end&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;on&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;off&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span>, callback<span class="tsd-signature-symbol">: </span><a href="../interfaces/api.sceneeventnotification.html" class="tsd-signature-type" data-tsd-kind="Interface">SceneEventNotification</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets a scene, when the corresponding <a href="../interfaces/api.sceneevent.html">SceneEvent</a> scene button in the app is pressed</p>
+								</div>
+								<p>This is useful for triggering scenes from the app.</p>
+								<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+									<h4>Example</h4>
+								</a>
+								<pre><code class="language-js"><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">scene</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Movie&#039;</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">   </span><span style="color: #008000">//This scene is triggered when pressing the button named &quot;Movie&quot; in the app</span>
+<span style="color: #000000">   </span><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">transmit</span><span style="color: #000000">(</span><span style="color: #098658">4</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;off&#039;</span><span style="color: #000000">); </span><span style="color: #008000">//Switch the main light off</span>
+<span style="color: #000000">   </span><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">dim</span><span style="color: #000000">([</span><span style="color: #098658">5</span><span style="color: #000000">, </span><span style="color: #098658">6</span><span style="color: #000000">], </span><span style="color: #098658">0.2</span><span style="color: #000000">); </span><span style="color: #008000">//Dim both ambient lights to 20%</span>
+<span style="color: #000000">});</span>
+</code></pre>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p><a href="../interfaces/api.sceneevent.html">SceneEvent</a>s matching this name (or this id) execute this scene</p>
+									</div>
+								</li>
+								<li>
+									<h5>callback: <a href="../interfaces/api.sceneeventnotification.html" class="tsd-signature-type" data-tsd-kind="Interface">SceneEventNotification</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>This callback function defines the scene to be executed</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets a scene, when</p>
+									<ul>
+										<li>the corresponding <a href="../interfaces/api.sceneevent.html">SceneEvent</a> scene button in the app is pressed, or</li>
+										<li>when an <a href="api.deviceevent.html">DeviceEvent</a> event from a physical button is received</li>
+									</ul>
+								</div>
+								<p>This is useful for triggering scenes both from the app and from a wall switch.</p>
+								<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+									<h4>Example</h4>
+								</a>
+								<pre><code class="language-js"><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">scene</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Movie&#039;</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">   </span><span style="color: #008000">//This scene is triggered</span>
+<span style="color: #000000">   </span><span style="color: #008000">// * when pressing the button named &quot;Movie&quot; in the app</span>
+<span style="color: #000000">   </span><span style="color: #008000">// * when pushing the physical button attached to the sender address 3, command &#039;toggle&#039;</span>
+<span style="color: #000000">   </span><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">transmit</span><span style="color: #000000">(</span><span style="color: #098658">4</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;off&#039;</span><span style="color: #000000">); </span><span style="color: #008000">//Switch the main light off</span>
+<span style="color: #000000">   </span><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">dim</span><span style="color: #000000">([</span><span style="color: #098658">5</span><span style="color: #000000">, </span><span style="color: #098658">6</span><span style="color: #000000">], </span><span style="color: #098658">0.2</span><span style="color: #000000">); </span><span style="color: #008000">//Dim both ambient lights to 20%</span>
+<span style="color: #000000">});</span>
+</code></pre>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p><a href="../interfaces/api.sceneevent.html">SceneEvent</a>s matching this name (or this id) execute this scene, or</p>
+									</div>
+								</li>
+								<li>
+									<h5>address: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p><a href="api.deviceevent.html">DeviceEvent</a>s received on this address (or any of these addresses) between <code>0</code> and <code>242</code> execute this scene</p>
+									</div>
+								</li>
+								<li>
+									<h5>callback: <a href="../interfaces/api.sceneeventnotification.html" class="tsd-signature-type" data-tsd-kind="Interface">SceneEventNotification</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>This callback function defines the scene</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets a scene, when</p>
+									<ul>
+										<li>the corresponding <a href="../interfaces/api.sceneevent.html">SceneEvent</a> scene button in the app is pressed, or</li>
+										<li>when an <a href="api.deviceevent.html">DeviceEvent</a> event from a physical button is received</li>
+									</ul>
+								</div>
+								<p>This is useful for triggering scenes both from the app and from a wall switch.</p>
+								<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+									<h4>Example</h4>
+								</a>
+								<pre><code class="language-js"><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">scene</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Movie&#039;</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;toggle&#039;</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">   </span><span style="color: #008000">//This scene is triggered</span>
+<span style="color: #000000">   </span><span style="color: #008000">// * when pressing the button named &quot;Movie&quot; in the app</span>
+<span style="color: #000000">   </span><span style="color: #008000">// * when pushing the physical button attached to the sender address 3, command &#039;toggle&#039;</span>
+<span style="color: #000000">   </span><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">transmit</span><span style="color: #000000">(</span><span style="color: #098658">4</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;off&#039;</span><span style="color: #000000">); </span><span style="color: #008000">//Switch the main light off</span>
+<span style="color: #000000">   </span><span style="color: #001080">zBus</span><span style="color: #000000">.</span><span style="color: #795E26">dim</span><span style="color: #000000">([</span><span style="color: #098658">5</span><span style="color: #000000">, </span><span style="color: #098658">6</span><span style="color: #000000">], </span><span style="color: #098658">0.2</span><span style="color: #000000">); </span><span style="color: #008000">//Dim both ambient lights to 20%</span>
+<span style="color: #000000">});</span>
+</code></pre>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p><a href="../interfaces/api.sceneevent.html">SceneEvent</a>s matching this name (or this id) execute this scene, or</p>
+									</div>
+								</li>
+								<li>
+									<h5>address: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p><a href="api.deviceevent.html">DeviceEvent</a>s received on this address (or any of these addresses) between <code>0</code> and <code>242</code> execute this scene, in combination with</p>
+									</div>
+								</li>
+								<li>
+									<h5>command: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;toggle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;start&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;end&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;on&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;off&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;toggle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;start&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;end&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;on&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;off&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p><a href="api.deviceevent.html">DeviceEvent</a>s received matching this <a href="../enums/api.command.html">Command</a> (name or <code>number</code> between <code>0</code> and <code>255</code>) or any of these commands execute this scene</p>
+									</div>
+								</li>
+								<li>
+									<h5>callback: <a href="../interfaces/api.sceneeventnotification.html" class="tsd-signature-type" data-tsd-kind="Interface">SceneEventNotification</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>This callback function defines the scene to be executed</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -473,7 +626,7 @@
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Transmits an address, <a href="../enums/api.command.html">Command</a>, and possibly a data packet to control a bus <a href="../interfaces/api.device.html">Device</a></p>
+									<p>Transmits an address, <a href="../enums/api.command.html">Command</a>, and possibly a data packet to control a Z-Bus <a href="../interfaces/api.device.html">Device</a></p>
 									<a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
 										<h4>Examples</h4>
 									</a>
@@ -497,13 +650,13 @@
 								<li>
 									<h5>address: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>One or more addresses of the controlled <a href="../interfaces/api.device.html">Device</a>(s)</p>
+										<p>One or more addresses of the controlled <a href="../interfaces/api.device.html">Device</a>(s) between <code>0</code> and <code>242</code></p>
 									</div>
 								</li>
 								<li>
 									<h5>command: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;toggle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;start&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;end&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;on&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;off&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Valid <a href="../enums/api.command.html">Command</a> or command code (<code>number</code> between 0 and 255) to send to the device</p>
+										<p>Valid <a href="../enums/api.command.html">Command</a> (name or <code>number</code> between <code>0</code> and <code>255</code>) to send to the device</p>
 									</div>
 								</li>
 								<li>
@@ -542,7 +695,13 @@
 						<a href="api.deviceevent.html" class="tsd-kind-icon">Device<wbr>Event</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="api.dimmerevent.html" class="tsd-kind-icon">Dimmer<wbr>Event</a>
+						<a href="api.dimmerdata.html" class="tsd-kind-icon">Dimmer<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="api.dimmerdevice.html" class="tsd-kind-icon">Dimmer<wbr>Device</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="api.switchingdevice.html" class="tsd-kind-icon">Switching<wbr>Device</a>
 					</li>
 				</ul>
 				<ul class="current">
@@ -578,7 +737,19 @@
 						<a href="../interfaces/api.device.html" class="tsd-kind-icon">Device</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/api.deviceeventnotification.html" class="tsd-kind-icon">Device<wbr>Event<wbr>Notification</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/api.receiver.html" class="tsd-kind-icon">Receiver</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="../interfaces/api.sceneevent.html" class="tsd-kind-icon">Scene<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/api.sceneeventnotification.html" class="tsd-kind-icon">Scene<wbr>Event<wbr>Notification</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/api.transmitter.html" class="tsd-kind-icon">Transmitter</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-module">
 						<a href="../modules/api.html#zbus-1" class="tsd-kind-icon">z<wbr>Bus</a>

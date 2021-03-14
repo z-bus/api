@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>DeviceEvent | @z-bus</title>
+	<title>DimmerData | @z-bus</title>
 	<meta name="description" content="Documentation for @z-bus">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -58,10 +58,10 @@
 					<a href="../modules/api.html">api</a>
 				</li>
 				<li>
-					<a href="api.deviceevent.html">DeviceEvent</a>
+					<a href="api.dimmerdata.html">DimmerData</a>
 				</li>
 			</ul>
-			<h1>Class DeviceEvent</h1>
+			<h1>Class DimmerData</h1>
 		</div>
 	</div>
 </header>
@@ -71,11 +71,7 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Contains a communication event to control a Z-Bus <a href="../interfaces/api.device.html">Device</a>, such communication is either</p>
-						<ul>
-							<li>transmitted to any smart home <a href="../interfaces/api.device.html">Device</a> over the Z-Bus network, or</li>
-							<li>received from any smart home <a href="../interfaces/api.device.html">Device</a> over the Z-Bus network.</li>
-						</ul>
+						<p>This packs and unpacks <code>data</code> of a <a href="api.deviceevent.html">DeviceEvent</a> to control a <a href="api.dimmerdevice.html">DimmerDevice</a></p>
 					</div>
 				</div>
 			</section>
@@ -83,7 +79,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">DeviceEvent</span>
+						<span class="target">DimmerData</span>
 					</li>
 				</ul>
 			</section>
@@ -94,15 +90,22 @@
 						<section class="tsd-index-section ">
 							<h3>Constructors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="api.deviceevent.html#constructor" class="tsd-kind-icon">constructor</a></li>
+								<li class="tsd-kind-constructor tsd-parent-kind-class"><a href="api.dimmerdata.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="api.deviceevent.html#address" class="tsd-kind-icon">address</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="api.deviceevent.html#command" class="tsd-kind-icon">command</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="api.deviceevent.html#data" class="tsd-kind-icon">data</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="api.dimmerdata.html#brightness" class="tsd-kind-icon">brightness</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="api.dimmerdata.html#direction" class="tsd-kind-icon">direction</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="api.dimmerdata.html#duration" class="tsd-kind-icon">duration</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="api.dimmerdata.html#pack" class="tsd-kind-icon">pack</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="api.dimmerdata.html#unpack" class="tsd-kind-icon">unpack</a></li>
 							</ul>
 						</section>
 					</div>
@@ -114,30 +117,25 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Device<wbr>Event<span class="tsd-signature-symbol">(</span>address<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, command<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;toggle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;start&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;end&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;on&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;off&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span>, data<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Dimmer<wbr>Data<span class="tsd-signature-symbol">(</span>brightness<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, duration<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, direction<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="api.dimmerdata.html" class="tsd-signature-type" data-tsd-kind="Class">DimmerData</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Create a DeviceEvent based on address, command, and optionally data</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>address: <span class="tsd-signature-type">number</span></h5>
+									<h5>brightness: <span class="tsd-signature-type">number</span></h5>
 								</li>
 								<li>
-									<h5>command: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;toggle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;start&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;end&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;on&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;off&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span></h5>
+									<h5>duration: <span class="tsd-signature-type">number</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> data: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>direction: <span class="tsd-signature-type">number</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="api.deviceevent.html" class="tsd-signature-type" data-tsd-kind="Class">DeviceEvent</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="api.dimmerdata.html" class="tsd-signature-type" data-tsd-kind="Class">DimmerData</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -145,40 +143,83 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="address" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> address</h3>
-					<div class="tsd-signature tsd-kind-icon">address<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="brightness" class="tsd-anchor"></a>
+					<h3>brightness</h3>
+					<div class="tsd-signature tsd-kind-icon">brightness<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Address of the Z-Bus device between <code>0</code> and <code>242</code></p>
+							<p>Brightness between <code>0.0</code> and <code>1.0</code> %</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="command" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> command</h3>
-					<div class="tsd-signature tsd-kind-icon">command<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="direction" class="tsd-anchor"></a>
+					<h3>direction</h3>
+					<div class="tsd-signature tsd-kind-icon">direction<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Command used to control a device between <code>0</code> and <code>255</code> (values see <a href="../enums/api.command.html">Command</a>)</p>
+							<p>Direction of the previous dimming ramp where <code>0</code> is down and <code>1</code> is up</p>
 						</div>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="data" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> <span class="tsd-flag ts-flagReadonly">Readonly</span> data</h3>
-					<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></div>
+					<a name="duration" class="tsd-anchor"></a>
+					<h3>duration</h3>
+					<div class="tsd-signature tsd-kind-icon">duration<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Optional two-byte data packet used to control a device (each byte between <code>0</code> and <code>255</code>)</p>
+							<p>Duration of a full dimming ramp (from 0 to 100%) between <code>0.04</code> and <code>160</code> seconds</p>
 						</div>
 					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="pack" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> pack</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">pack<span class="tsd-signature-symbol">(</span>properties<span class="tsd-signature-symbol">: </span><a href="api.dimmerdata.html" class="tsd-signature-type" data-tsd-kind="Class">DimmerData</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>properties: <a href="api.dimmerdata.html" class="tsd-signature-type" data-tsd-kind="Class">DimmerData</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-static">
+					<a name="unpack" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> unpack</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static">
+						<li class="tsd-signature tsd-kind-icon">unpack<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8Array</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="api.dimmerdata.html" class="tsd-signature-type" data-tsd-kind="Class">DimmerData</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>data: <span class="tsd-signature-type">Uint8Array</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="api.dimmerdata.html" class="tsd-signature-type" data-tsd-kind="Class">DimmerData</a></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -201,30 +242,36 @@
 					<li class=" tsd-kind-enum tsd-parent-kind-module">
 						<a href="../enums/api.command.html" class="tsd-kind-icon">Command</a>
 					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="api.deviceevent.html" class="tsd-kind-icon">Device<wbr>Event</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module">
-						<a href="api.deviceevent.html" class="tsd-kind-icon">Device<wbr>Event</a>
+						<a href="api.dimmerdata.html" class="tsd-kind-icon">Dimmer<wbr>Data</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
-								<a href="api.deviceevent.html#constructor" class="tsd-kind-icon">constructor</a>
+								<a href="api.dimmerdata.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="api.deviceevent.html#address" class="tsd-kind-icon">address</a>
+								<a href="api.dimmerdata.html#brightness" class="tsd-kind-icon">brightness</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="api.deviceevent.html#command" class="tsd-kind-icon">command</a>
+								<a href="api.dimmerdata.html#direction" class="tsd-kind-icon">direction</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="api.deviceevent.html#data" class="tsd-kind-icon">data</a>
+								<a href="api.dimmerdata.html#duration" class="tsd-kind-icon">duration</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="api.dimmerdata.html#pack" class="tsd-kind-icon">pack</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
+								<a href="api.dimmerdata.html#unpack" class="tsd-kind-icon">unpack</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="api.dimmerdata.html" class="tsd-kind-icon">Dimmer<wbr>Data</a>
-					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="api.dimmerdevice.html" class="tsd-kind-icon">Dimmer<wbr>Device</a>
 					</li>
@@ -278,6 +325,9 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
 			</ul>
 		</div>
 	</div>

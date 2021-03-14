@@ -87,7 +87,9 @@
 							<h3>Classes</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/api.deviceevent.html" class="tsd-kind-icon">Device<wbr>Event</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/api.dimmerevent.html" class="tsd-kind-icon">Dimmer<wbr>Event</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/api.dimmerdata.html" class="tsd-kind-icon">Dimmer<wbr>Data</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/api.dimmerdevice.html" class="tsd-kind-icon">Dimmer<wbr>Device</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/api.switchingdevice.html" class="tsd-kind-icon">Switching<wbr>Device</a></li>
 								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/api.zbus.html" class="tsd-kind-icon">ZBus</a></li>
 							</ul>
 						</section>
@@ -95,7 +97,11 @@
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/api.device.html" class="tsd-kind-icon">Device</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/api.deviceeventnotification.html" class="tsd-kind-icon">Device<wbr>Event<wbr>Notification</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/api.receiver.html" class="tsd-kind-icon">Receiver</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/api.sceneevent.html" class="tsd-kind-icon">Scene<wbr>Event</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/api.sceneeventnotification.html" class="tsd-kind-icon">Scene<wbr>Event<wbr>Notification</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/api.transmitter.html" class="tsd-kind-icon">Transmitter</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -117,8 +123,19 @@
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The global <code>zBus</code> object is an instance of <a href="../classes/api.zbus.html">ZBus</a> to access the Z-Bus smart home system</p>
+							<p>The global <code>zBus</code> object is an instance of <a href="../classes/api.zbus.html">ZBus</a> which is loaded into the
+								<a href="https://home.z-bus.com/script">Z-Bus Home Script</a> scripting runtime environment.
+							It allows you to access and control the Z-Bus smart home system:</p>
+							<ul>
+								<li>receiving Z-Bus device events (and react to sensory input from these devices)</li>
+								<li>transmitting Z-Bus device events (to control these devices)</li>
+								<li>dimming lights</li>
+								<li>controlling lighting scenes</li>
+								<li>creating logic control flows and central control</li>
+								<li>designing timers and presence simulations</li>
+							</ul>
 						</div>
+						<p>These library functions are described in the <a href="../classes/api.zbus.html">ZBus</a> class</p>
 					</div>
 				</section>
 			</section>
@@ -146,7 +163,13 @@
 						<a href="../classes/api.deviceevent.html" class="tsd-kind-icon">Device<wbr>Event</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
-						<a href="../classes/api.dimmerevent.html" class="tsd-kind-icon">Dimmer<wbr>Event</a>
+						<a href="../classes/api.dimmerdata.html" class="tsd-kind-icon">Dimmer<wbr>Data</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/api.dimmerdevice.html" class="tsd-kind-icon">Dimmer<wbr>Device</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="../classes/api.switchingdevice.html" class="tsd-kind-icon">Switching<wbr>Device</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="../classes/api.zbus.html" class="tsd-kind-icon">ZBus</a>
@@ -155,7 +178,19 @@
 						<a href="../interfaces/api.device.html" class="tsd-kind-icon">Device</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/api.deviceeventnotification.html" class="tsd-kind-icon">Device<wbr>Event<wbr>Notification</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/api.receiver.html" class="tsd-kind-icon">Receiver</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="../interfaces/api.sceneevent.html" class="tsd-kind-icon">Scene<wbr>Event</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/api.sceneeventnotification.html" class="tsd-kind-icon">Scene<wbr>Event<wbr>Notification</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/api.transmitter.html" class="tsd-kind-icon">Transmitter</a>
 					</li>
 					<li class=" tsd-kind-variable tsd-parent-kind-module">
 						<a href="api.html#zbus-1" class="tsd-kind-icon">z<wbr>Bus</a>

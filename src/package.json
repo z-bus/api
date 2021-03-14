@@ -1,6 +1,6 @@
 {
   "name": "@z-bus/api",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "Z-Bus types and scripting API for the \"Interface\" IoT smart home device",
   "main": "index.js",
   "exports": {
@@ -27,6 +27,6 @@
   },
   "homepage": "https://github.com/z-bus/api#readme",
   "dependencies": {
-    "rxjs": "^6.6.3"
+    "rxjs": "^6.6.6"
   }
 }

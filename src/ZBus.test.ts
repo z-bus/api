@@ -1,25 +1,25 @@
-import { zBus } from './index';
+import { ZBus } from './index';
 
 import { DeviceEvent } from './deviceEvent';
 
-import { of, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { toArray } from 'rxjs/operators';
-
-const transmission = new Subject<DeviceEvent>();
-//const reception = new Observable<DeviceEvent>();
-zBus.link(transmission, undefined, undefined);
+import { SceneEvent } from './index';
 
 test('transmit', (done) => {
+  const transmission = new Subject<DeviceEvent>();
+  const zBus = ZBus.linkInstance(transmission, new Observable<DeviceEvent>(), new Observable<SceneEvent>());
+
   const expectedTransmission = [
-    new DeviceEvent(98, 'on'),
-    new DeviceEvent(98, 3),
-    new DeviceEvent(5, 'down'),
-    new DeviceEvent(1, 'down'),
-    new DeviceEvent(2, 'down'),
-    new DeviceEvent(3, 'down'),
-    new DeviceEvent(4, 'down'),
-    new DeviceEvent(5, 'down'),
-    new DeviceEvent(5, 3, [0x03, 0xff]),
+    { address: 98, command: 3 },
+    { address: 98, command: 3 },
+    { address: 5, command: 12 },
+    { address: 1, command: 12 },
+    { address: 2, command: 12 },
+    { address: 3, command: 12 },
+    { address: 4, command: 12 },
+    { address: 5, command: 12 },
+    { address: 5, command: 3, data: [0x03, 0xff] },
   ];
 
   transmission.pipe(toArray()).subscribe((events: Array<DeviceEvent>) => {
@@ -37,6 +37,11 @@ test('transmit', (done) => {
 });
 
 test('invalid transmit throws', () => {
+  const zBus = ZBus.linkInstance(
+    new Subject<DeviceEvent>(),
+    new Observable<DeviceEvent>(),
+    new Observable<SceneEvent>(),
+  );
   expect(() => {
     zBus.transmit(-1, 'on');
   }).toThrow(/address/);
@@ -54,10 +59,10 @@ test('invalid transmit throws', () => {
   }).toThrow(/command/);
   expect(() => {
     zBus.transmit(5, 'on', [0x03, 256]);
-  }).toThrow(/value/);
+  }).toThrow(/data/);
   expect(() => {
     zBus.transmit(5, 'on', [-1, 255]);
-  }).toThrow(/value/);
+  }).toThrow(/data/);
   expect(() => {
     zBus.transmit(5, 'on', [0]);
   }).toThrow(/length/);
@@ -66,9 +71,12 @@ test('invalid transmit throws', () => {
   }).toThrow(/length/);
 });
 
-test.only('receive', (done) => {
-  zBus.reception = of(new DeviceEvent(0, 0), new DeviceEvent(0, 0), new DeviceEvent(1, 2), new DeviceEvent(2, 0));
-
+test('receive', (done) => {
+  const zBus = ZBus.linkInstance(
+    new Subject<DeviceEvent>(),
+    of({ address: 0, command: 0 }, { address: 0, command: 0 }, { address: 1, command: 2 }, { address: 2, command: 0 }),
+    new Observable<SceneEvent>(),
+  );
   const all = jest.fn();
   zBus.receive(all);
   expect(all).toHaveBeenCalledTimes(4);
@@ -103,5 +111,32 @@ test.only('receive', (done) => {
     expect(event.command).toBe(2);
     expect(event.data).toBeUndefined();
   });
+  done();
+});
+
+test('reception callback', (done) => {
+  const zBus = ZBus.linkInstance(
+    new Subject<DeviceEvent>(),
+    of({ address: 0, command: 0 }, { address: 99, command: 3 }, { address: 99, command: 12 }),
+    new Observable<SceneEvent>(),
+  );
+
+  const counter = jest.fn();
+  zBus.receive((event) => {
+    expect(event.address).toBeGreaterThanOrEqual(0);
+    expect(event.command).toBeGreaterThanOrEqual(0);
+    expect(event.data).toBeUndefined();
+    counter();
+  });
+  expect(counter).toHaveBeenCalledTimes(3);
+
+  let count = 0;
+  function switchEverything(event: any) {
+    expect(event.address).toBe(99);
+    expect(event.command === 3 || event.command === 12).toBeTruthy();
+    count++;
+  }
+  zBus.receive(99, ['on', 'off'], switchEverything);
+  expect(count).toBe(2);
   done();
 });
