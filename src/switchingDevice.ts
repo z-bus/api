@@ -1,9 +1,13 @@
 import { Device } from './device';
-import { DeviceEvent } from './deviceEvent';
 import { Command } from './command';
 import { ZBus } from './ZBus';
 import { Transmitter } from './transmitter';
 
+/**
+ * Z-Bus switching device which controls a single light, heating valve, etc
+ * * [Switching receiver / Schaltempfänger](https://www.z-bus.de/produkte/schaltempfaenger) (EM02-100)
+ * * [Switching receiver with feedback / Schaltempfänger mit Rückmeldung](https://www.z-bus.de/produkte/schaltempfaenger-mit-rueckmeldung) (EM02-350)
+ */
 export class SwitchingDevice implements Device, Transmitter {
   id?: string;
   name?: string;
@@ -15,6 +19,14 @@ export class SwitchingDevice implements Device, Transmitter {
 
   /**
    * Creates a new Z-Bus {@link SwitchingDevice}
+   *
+   * #### Example
+   * ```js
+   * { SwitchingDevice } = require('@z-bus/api');
+   * //Switches address 0 on
+   * new SwitchingDevice(0).transmit('on');
+   * ```
+   *
    * @param address Address between `0` and `242` to which the device will be linked
    */
   constructor(address: number) {
@@ -31,21 +43,21 @@ export class SwitchingDevice implements Device, Transmitter {
    *   * from `off` to `on`, or
    *   * from `on` to `off`
    */
-  toggle() {
+  toggle(): void {
     this.transmit('toggle');
   }
 
   /**
    * Switches the Z-Bus {@link SwitchingDevice} `on`
    */
-  on() {
+  on(): void {
     this.transmit('on');
   }
 
   /**
    * Switches the Z-Bus {@link SwitchingDevice} `off`
    */
-  off() {
+  off(): void {
     this.transmit('off');
   }
 

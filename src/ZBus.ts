@@ -198,10 +198,10 @@ export class ZBus {
    */
   dim(address: number | number[], brightness: number, duration = 8): void {
     if (typeof address === 'number') {
-      this.transmission.next(DimmerDevice.createEvent(address, brightness, duration));
+      this.transmission.next(DimmerDevice.createEvent(address, 'on', brightness, duration));
     } else {
       address.forEach((address) => {
-        this.transmission.next(DimmerDevice.createEvent(address, brightness, duration));
+        this.transmission.next(DimmerDevice.createEvent(address, 'on', brightness, duration));
       });
     }
   }

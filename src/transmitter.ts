@@ -1,4 +1,3 @@
-import { DeviceEvent } from './deviceEvent';
 import { Command } from './command';
 
 /**

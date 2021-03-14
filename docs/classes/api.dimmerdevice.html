@@ -68,6 +68,16 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Z-Bus dimmer device which adjusts brightness of a light</p>
+						<ul>
+							<li><a href="https://www.z-bus.de/produkte/dimmer">Dimmer</a> (DI05-300)</li>
+						</ul>
+					</div>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -97,6 +107,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="api.dimmerdevice.html#address" class="tsd-kind-icon">address</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="api.dimmerdevice.html#brightness" class="tsd-kind-icon">brightness</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="api.dimmerdevice.html#id" class="tsd-kind-icon">id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="api.dimmerdevice.html#name" class="tsd-kind-icon">name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="api.dimmerdevice.html#profile" class="tsd-kind-icon">profile</a></li>
@@ -108,6 +119,9 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="api.dimmerdevice.html#dim" class="tsd-kind-icon">dim</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="api.dimmerdevice.html#off" class="tsd-kind-icon">off</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="api.dimmerdevice.html#on" class="tsd-kind-icon">on</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="api.dimmerdevice.html#toggle" class="tsd-kind-icon">toggle</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="api.dimmerdevice.html#transmit" class="tsd-kind-icon">transmit</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-static"><a href="api.dimmerdevice.html#createevent" class="tsd-kind-icon">create<wbr>Event</a></li>
 							</ul>
@@ -127,10 +141,24 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a new Z-Bus <a href="api.dimmerdevice.html">DimmerDevice</a></p>
+								</div>
+								<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+									<h4>Example</h4>
+								</a>
+								<pre><code class="language-js"><span style="color: #000000">{ </span><span style="color: #001080">DimmerDevice</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;@z-bus/api&#039;</span><span style="color: #000000">);</span>
+<span style="color: #008000">//Dims address 0 to 50%</span>
+<span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">DimmerDevice</span><span style="color: #000000">(</span><span style="color: #098658">0</span><span style="color: #000000">).</span><span style="color: #795E26">dim</span><span style="color: #000000">(</span><span style="color: #098658">0.5</span><span style="color: #000000">);</span>
+</code></pre>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>address: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="api.dimmerdevice.html" class="tsd-signature-type" data-tsd-kind="Class">DimmerDevice</a></h4>
@@ -151,6 +179,23 @@
 						<div class="lead">
 							<p>Addresses the Z-Bus device is linked to.
 							The device will react when receiving a corresponding <a href="api.deviceevent.html">DeviceEvent</a> and change its state accordingly.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="brightness" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> brightness</h3>
+					<div class="tsd-signature tsd-kind-icon">brightness<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Current brightness of the Z-Bus <a href="api.dimmerdevice.html">DimmerDevice</a> as a <code>number</code> between <code>0.0</code> and <code>1.0</code> in %</p>
+							<ul>
+								<li><code>0.0</code> is off</li>
+								<li><code>0.5</code> is 50% brightness</li>
+								<li><code>1.0</code> is 100% on</li>
+							</ul>
 						</div>
 					</div>
 				</section>
@@ -229,7 +274,7 @@
 							<ul>
 								<li><code>&#39;switch&#39;</code> for <a href="api.switchingdevice.html">SwitchingDevice</a></li>
 								<li><code>&#39;dimmer&#39;</code> for <a href="api.dimmerdevice.html">DimmerDevice</a></li>
-								<li><code>&#39;directional&#39;</code> for {@link DirectionalDevice}</li>
+								<li><code>&#39;directional&#39;</code> for <a href="api.directionaldevice.html">DirectionalDevice</a></li>
 							</ul>
 						</div>
 					</div>
@@ -267,6 +312,67 @@
 									</div>
 								</li>
 							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="off" class="tsd-anchor"></a>
+					<h3>off</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">off<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Switches the Z-Bus <a href="api.dimmerdevice.html">DimmerDevice</a> <code>off</code></p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="on" class="tsd-anchor"></a>
+					<h3>on</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Switches the Z-Bus <a href="api.dimmerdevice.html">DimmerDevice</a> <code>on</code></p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="toggle" class="tsd-anchor"></a>
+					<h3>toggle</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">toggle<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Toggles the Z-Bus <a href="api.dimmerdevice.html">DimmerDevice</a>. The device will alternate</p>
+									<ul>
+										<li>from <code>off</code> to <code>on</code>, or</li>
+										<li>from <code>on</code> to <code>off</code></li>
+									</ul>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -325,6 +431,13 @@
 								<div class="lead">
 									<p>Creates an event to control a Z-Bus <a href="api.dimmerdevice.html">DimmerDevice</a></p>
 								</div>
+								<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+									<h4>Example</h4>
+								</a>
+								<pre><code class="language-js"><span style="color: #000000">{ </span><span style="color: #001080">DimmerDevice</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;@z-bus/api&#039;</span><span style="color: #000000">);</span>
+<span style="color: #008000">//Event to dim address 0 to 50%</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">event</span><span style="color: #000000"> = </span><span style="color: #001080">DimmerDevice</span><span style="color: #000000">.</span><span style="color: #795E26">createEvent</span><span style="color: #000000">(</span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;on&#039;</span><span style="color: #000000">, </span><span style="color: #098658">0.5</span><span style="color: #000000">);</span>
+</code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -397,6 +510,9 @@
 								<a href="api.dimmerdevice.html#address" class="tsd-kind-icon">address</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a href="api.dimmerdevice.html#brightness" class="tsd-kind-icon">brightness</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="api.dimmerdevice.html#id" class="tsd-kind-icon">id</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
@@ -415,6 +531,15 @@
 								<a href="api.dimmerdevice.html#dim" class="tsd-kind-icon">dim</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="api.dimmerdevice.html#off" class="tsd-kind-icon">off</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="api.dimmerdevice.html#on" class="tsd-kind-icon">on</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="api.dimmerdevice.html#toggle" class="tsd-kind-icon">toggle</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="api.dimmerdevice.html#transmit" class="tsd-kind-icon">transmit</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-static">
@@ -424,6 +549,9 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="api.directionaldevice.html" class="tsd-kind-icon">Directional<wbr>Device</a>
+					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="api.switchingdevice.html" class="tsd-kind-icon">Switching<wbr>Device</a>
 					</li>

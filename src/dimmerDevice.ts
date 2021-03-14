@@ -1,4 +1,3 @@
-import { Receiver } from './receiver';
 import { DeviceEvent } from './deviceEvent';
 import { Transmitter } from './transmitter';
 import { Command } from './command';
@@ -10,24 +9,47 @@ import { ZBus } from './ZBus';
  */
 export class DimmerData {
   /**
-   * Brightness between `0.0` and `1.0` %
+   * Brightness of the Z-Bus {@link DimmerDevice} between `0.0` and `1.0` in %
+   * * `0.0` is off
+   * * `0.5` is 50% brightness
+   * * `1.0` is 100% on
    */
-  brightness: number;
+  readonly brightness: number;
   /**
    * Duration of a full dimming ramp (from 0 to 100%) between `0.04` and `160` seconds
    */
-  duration: number;
+  readonly duration: number;
   /**
    * Direction of the previous dimming ramp where `0` is down and `1` is up
    */
-  direction: number;
+  readonly direction: number;
 
-  constructor(brightness: number, duration: number, direction: number) {
+  /**
+   * Creates {@link DimmerData} properties from brightness, duration and direction
+   *
+   * #### Example
+   * ```js
+   * { DeviceEvent, DimmerData } = require('@z-bus/api');
+   * //Event to dim address 0 to 50%
+   * const event = new DeviceEvent(0, 'on', new DimmerData(0.5));
+   * ```
+   *
+   * @param brightness Brightness of the Z-Bus {@link DimmerDevice} between `0.0` and `1.0` in %
+   * @param duration Duration of a full dimming ramp (from 0 to 100%) between `0.04` and `160` seconds
+   * @param direction Direction of the previous dimming ramp where `0` is down and `1` is up
+   */
+  constructor(brightness: number, duration = 8, direction = 0) {
     this.brightness = brightness;
     this.duration = duration;
     this.direction = direction;
   }
 
+  /**
+   * Converts {@link DimmerDevice} properties into {@link DimmerData} to transmit
+   * it as part of a {@link DeviceEvent}
+   * @param properties a brightness, duration and direction
+   * @returns two-byte data packet
+   */
   static pack(properties: DimmerData): number[] {
     //Check existence
     if (
@@ -59,24 +81,66 @@ export class DimmerData {
     return data;
   }
 
-  static unpack(data: Uint8Array): DimmerData {
+  /**
+   * Converts {@link DimmerData} received as part of a {@link DeviceEvent}
+   * into {@link DimmerDevice} properties
+   * @param data a two-byte data packet
+   * @returns a brightness, duration and direction
+   */
+  static unpack(data: number[] | Uint8Array): DimmerData {
+    //Check length
+    if (data.length !== 2) {
+      throw new Error('Unsupported data length (must be 2 bytes)');
+    }
+    //Check values
+    data.forEach((byte: number) => {
+      if (byte < 0x00 || byte > 0xff) {
+        throw new Error('Unsupported data values (must be 0x00 - 0xff)');
+      }
+    });
+    //Unpack
     return {
       brightness: data[1] / 255,
-      duration: (data[0] & 0x7f) < 64 ? (data[0] & 0x7f) * 2.55 : 2.55 / ((data[0] & 0x7f) - 64 + 1),
+      duration: (data[0] & 0x7f) < 0x40 ? (data[0] & 0x7f) * 2.55 : 2.55 / ((data[0] & 0x7f) - 64 + 1),
       direction: data[0] & 0x80,
     };
   }
 }
 
+/**
+ * Z-Bus dimmer device which adjusts brightness of a light
+ * * [Dimmer](https://www.z-bus.de/produkte/dimmer) (DI05-300)
+ */
 export class DimmerDevice implements Device, Transmitter {
   id?: string;
   name?: string;
   address: number[];
+
   state?: 'on' | 'off';
+
+  /**
+   * Current brightness of the Z-Bus {@link DimmerDevice} as a `number` between `0.0` and `1.0` in %
+   * * `0.0` is off
+   * * `0.5` is 50% brightness
+   * * `1.0` is 100% on
+   */
+  brightness?: number;
 
   type = 'dimmer';
   profile?: string;
 
+  /**
+   * Creates a new Z-Bus {@link DimmerDevice}
+   *
+   * #### Example
+   * ```js
+   * { DimmerDevice } = require('@z-bus/api');
+   * //Dims address 0 to 50%
+   * new DimmerDevice(0).dim(0.5);
+   * ```
+   *
+   * @param address
+   */
   constructor(address: number) {
     //Check address
     if (address < 0 || address > 242) {
@@ -93,6 +157,29 @@ export class DimmerDevice implements Device, Transmitter {
     }
   }
   */
+
+  /**
+   * Toggles the Z-Bus {@link DimmerDevice}. The device will alternate
+   *   * from `off` to `on`, or
+   *   * from `on` to `off`
+   */
+  toggle(): void {
+    this.transmit('toggle');
+  }
+
+  /**
+   * Switches the Z-Bus {@link DimmerDevice} `on`
+   */
+  on(): void {
+    this.transmit('on');
+  }
+
+  /**
+   * Switches the Z-Bus {@link DimmerDevice} `off`
+   */
+  off(): void {
+    this.transmit('off');
+  }
 
   /**
    * Dims the Z-Bus {@link DimmerDevice}
@@ -124,6 +211,13 @@ export class DimmerDevice implements Device, Transmitter {
 
   /**
    * Creates an event to control a Z-Bus {@link DimmerDevice}
+   *
+   * #### Example
+   * ```js
+   * { DimmerDevice } = require('@z-bus/api');
+   * //Event to dim address 0 to 50%
+   * const event = DimmerDevice.createEvent(0, 'on', 0.5);
+   * ```
    *
    * @param address Address of the controlled {@link DimmerDevice} between `0` and `242`
    * @param command {@link Command} used to control the {@link DimmerDevice} between `0` and `255`

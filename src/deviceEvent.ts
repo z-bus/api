@@ -21,6 +21,12 @@ export class DeviceEvent {
 
   /**
    * Create a DeviceEvent based on address, command, and optionally data
+   *
+   * #### Example
+   * ```js
+   * { DeviceEvent } = require('@z-bus/api');
+   * const event = new DeviceEvent(0, 'on'); //Event to switch address 0 on
+   * ```
    */
   constructor(address: number, command: number | keyof typeof Command, data?: number[]) {
     //Check address

@@ -20,6 +20,11 @@ test('transmit', (done) => {
     { address: 4, command: 12 },
     { address: 5, command: 12 },
     { address: 5, command: 3, data: [0x03, 0xff] },
+    { address: 0, command: 3, data: [0x03, 0xff] },
+    { address: 0, command: 3, data: [0x03, 0x80] },
+    { address: 0, command: 3, data: [0x03, 0x00] },
+    { address: 0, command: 3, data: [0x3f, 0xff] },
+    { address: 0, command: 3, data: [0x7f, 0xff] },
   ];
 
   transmission.pipe(toArray()).subscribe((events: Array<DeviceEvent>) => {
@@ -32,6 +37,11 @@ test('transmit', (done) => {
   zBus.transmit(5, 'down');
   zBus.transmit([1, 2, 3, 4, 5], 'down');
   zBus.transmit(5, 'on', [0x03, 0xff]);
+  zBus.dim(0, 1.0);
+  zBus.dim(0, 0.5);
+  zBus.dim(0, 0.0);
+  zBus.dim(0, 1.0, 160);
+  zBus.dim(0, 1.0, 0.04);
 
   transmission.complete();
 });

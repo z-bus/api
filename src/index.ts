@@ -31,6 +31,7 @@ export { Device } from './device';
 export { Transmitter } from './transmitter';
 export { Receiver } from './receiver';
 export { SwitchingDevice } from './switchingDevice';
+export { DirectionalDevice } from './directionalDevice';
 export { DimmerDevice, DimmerData } from './dimmerDevice';
 
 export { Command } from './command';

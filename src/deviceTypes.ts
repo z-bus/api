@@ -44,7 +44,7 @@ export const deviceTypes: DeviceType[] = [
     ],
   },
   {
-    type: 'movement',
+    type: 'directional',
     description: 'Bewegungsfunktion (Jalousie, Rollladen, Fenster, ...)',
     states: [State.UP, State.DOWN, State.STOP],
     transitions: [
@@ -78,7 +78,7 @@ export const deviceTypes: DeviceType[] = [
     ],
   },
   {
-    type: 'movement-group',
+    type: 'directional-group',
     description: 'Bewegungsfunktion für Gruppen (Empfänger mit drei Adressen)',
     addresses: 3,
     states: [State.UP, State.DOWN, State.STOP],
