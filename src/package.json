@@ -1,6 +1,6 @@
 {
   "name": "@z-bus/api",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Z-Bus types and scripting API for the \"Interface\" IoT smart home device",
   "main": "index.js",
   "exports": {
