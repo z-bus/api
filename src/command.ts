@@ -1,5 +1,5 @@
 /**
- * A command is a `number` that is part of all {@link DeviceEvent} communication events which are
+ * A event is a `number` that is part of all {@link DeviceEvent} communication events which are
  *   * transmitted to any smart home {@link Device} over the Z-Bus network.
  *   * received from any smart home {@link Device} over the Z-Bus network.
  *

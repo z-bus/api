@@ -21,13 +21,13 @@ import schedule, {
  * Anonymous callback:
  * ```js
  * zBus.receive((event) => {
- *     console.log('Received', event.address, event.command, event.data);
+ *     console.log('Received', event.address, event.event, event.data);
  * });
  * ```
  * Callback with a named function:
  * ```js
  * function forwardCommand(event) {
- *     zBus.transmit([0, 1, 2, 3, 4, 5, 6, 7, 8], event.command);
+ *     zBus.transmit([0, 1, 2, 3, 4, 5, 6, 7, 8], event.event);
  * }
  * zBus.receive(99, ['on', 'off'], forwardCommand);
  * ```
@@ -37,7 +37,7 @@ import schedule, {
  *     console.log('Something received');
  * });
  * ```
- * @param event The received {@link DeviceEvent} contains address, command, and optional data
+ * @param event The received {@link DeviceEvent} contains address, event, and optional data
  */
 export interface DeviceEventNotification {
   (event: DeviceEvent): void;
@@ -147,20 +147,20 @@ export class ZBus {
   /**
    * Transmits an address, {@link Command}, and possibly a data packet to control a Z-Bus {@link Device}
    * #### Examples
-   * Send address 99, command 'on' (e.g. for light)
+   * Send address 99, event 'on' (e.g. for light)
    *
    * ```js
    * zBus.transmit(99, 'on');
    * zBus.transmit(99, 3);
    * ```
    *
-   * Send address 5, command 'down' (e.g. for blinds)
+   * Send address 5, event 'down' (e.g. for blinds)
    *
    * ```js
    * zBus.transmit(5, 'down');
    * ```
    *
-   * Send address 1, 2, 3, 4, 5 command 'down' (e.g. for centrally controlling multiple blinds)
+   * Send address 1, 2, 3, 4, 5 event 'down' (e.g. for centrally controlling multiple blinds)
    *
    * ```js
    * zBus.transmit([1, 2, 3, 4, 5], 'down');
@@ -206,10 +206,10 @@ export class ZBus {
    */
   dim(address: number | number[], brightness: number, duration = 8): void {
     if (typeof address === 'number') {
-      this.transmission.next(DimmerDevice.createEvent(address, 'on', brightness, duration));
+      this.transmission.next(DimmerDevice.createEvent(address, 'on', { brightness, duration, direction: 0 }));
     } else {
       address.forEach((address) => {
-        this.transmission.next(DimmerDevice.createEvent(address, 'on', brightness, duration));
+        this.transmission.next(DimmerDevice.createEvent(address, 'on', { brightness, duration, direction: 0 }));
       });
     }
   }
@@ -227,7 +227,7 @@ export class ZBus {
    *    zBus.dim([5, 6], 0.2); //Dim both ambient lights to 20%
    * });
    * ```
-   * @param name {@link SceneEvent}s matching this name (or this id) execute this scene
+   * @param name {@link SceneEvent}s matching this name (or this id) receive this scene
    * @param callback This callback function defines the scene to be executed
    */
   scene(name: string, callback: SceneEventNotification): void;
@@ -244,13 +244,13 @@ export class ZBus {
    * zBus.scene('Movie', 3, () => {
    *    //This scene is triggered
    *    // * when pressing the button named "Movie" in the app
-   *    // * when pushing the physical button attached to the sender address 3, command 'toggle'
+   *    // * when pushing the physical button attached to the sender address 3, event 'toggle'
    *    zBus.transmit(4, 'off'); //Switch the main light off
    *    zBus.dim([5, 6], 0.2); //Dim both ambient lights to 20%
    * });
    * ```
-   * @param name {@link SceneEvent}s matching this name (or this id) execute this scene, or
-   * @param address {@link DeviceEvent}s received on this address (or any of these addresses) between `0` and `242` execute this scene
+   * @param name {@link SceneEvent}s matching this name (or this id) receive this scene, or
+   * @param address {@link DeviceEvent}s received on this address (or any of these addresses) between `0` and `242` receive this scene
    * @param callback This callback function defines the scene
    */
   scene(name: string, address: number | number[], callback: SceneEventNotification): void;
@@ -267,14 +267,14 @@ export class ZBus {
    * zBus.scene('Movie', 3, 'toggle', () => {
    *    //This scene is triggered
    *    // * when pressing the button named "Movie" in the app
-   *    // * when pushing the physical button attached to the sender address 3, command 'toggle'
+   *    // * when pushing the physical button attached to the sender address 3, event 'toggle'
    *    zBus.transmit(4, 'off'); //Switch the main light off
    *    zBus.dim([5, 6], 0.2); //Dim both ambient lights to 20%
    * });
    * ```
-   * @param name {@link SceneEvent}s matching this name (or this id) execute this scene, or
-   * @param address {@link DeviceEvent}s received on this address (or any of these addresses) between `0` and `242` execute this scene, in combination with
-   * @param command {@link DeviceEvent}s received matching this {@link Command} (name or `number` between `0` and `255`) or any of these commands execute this scene
+   * @param name {@link SceneEvent}s matching this name (or this id) receive this scene, or
+   * @param address {@link DeviceEvent}s received on this address (or any of these addresses) between `0` and `242` receive this scene, in combination with
+   * @param command {@link DeviceEvent}s received matching this {@link Command} (name or `number` between `0` and `255`) or any of these commands receive this scene
    * @param callback This callback function defines the scene to be executed
    */
   scene(
@@ -312,7 +312,7 @@ export class ZBus {
         .subscribe(subscriber);
     }
     if (args.length == 4) {
-      //name, address, command, subscriber
+      //name, address, event, subscriber
       const select = args[0];
       const address: number | number[] = args[1];
       const command: number | number[] | Command | Array<number | keyof typeof Command> = args[2];
@@ -337,11 +337,11 @@ export class ZBus {
    * ```js
    * zBus.receive((event) => {
    *    //This triggers for any reception
-   *    console.log('Received', event.address, event.command);
+   *    console.log('Received', event.address, event.event);
    * });
    * ```
    *
-   * @param callback This function is called when an event is received from the Z-Bus network. The notification contains the received {@link DeviceEvent} including address, command, and possibly a data packet
+   * @param callback This function is called when an event is received from the Z-Bus network. The notification contains the received {@link DeviceEvent} including address, event, and possibly a data packet
    *
    */
   receive(callback: DeviceEventNotification): void;
@@ -359,17 +359,17 @@ export class ZBus {
    *
    * ```js
    * zBus.receive(80, (event) => {
-   *    //This triggers for a reception of any command on the address 80
-   *    //Address and command are passed via the event
-   *    console.log('Received on address', event.address, event.command);
+   *    //This triggers for a reception of any event on the address 80
+   *    //Address and event are passed via the event
+   *    console.log('Received on address', event.address, event.event);
    * });
    * zBus.receive(80, () => {
-   *    //This triggers for a reception of any command on the address 80
+   *    //This triggers for a reception of any event on the address 80
    *    console.log('Triggered on address 80');
    * });
    * ```
    * @param address Only events matching this address between `0` and `242` are received
-   * @param callback This function is called when an event is received from the Z-Bus network. The notification contains the received {@link DeviceEvent} including address, command, and possibly a data packet
+   * @param callback This function is called when an event is received from the Z-Bus network. The notification contains the received {@link DeviceEvent} including address, event, and possibly a data packet
    *
    */
   receive(address: number, callback: DeviceEventNotification): void;
@@ -385,13 +385,13 @@ export class ZBus {
    * #### Example
    * ```js
    * zBus.receive([79, 80], (event) => {
-   *    //This triggers for a reception of any command on either address 79 or 80
+   *    //This triggers for a reception of any event on either address 79 or 80
    *    console.log('Received on address', event.address);
    * });
    * ```
    *
    * @param address Only events matching any of these addresses between `0` and `242` are received
-   * @param callback This function is called when an event is received from the Z-Bus network. The notification contains the received {@link DeviceEvent} including address, command, and possibly a data packet
+   * @param callback This function is called when an event is received from the Z-Bus network. The notification contains the received {@link DeviceEvent} including address, event, and possibly a data packet
    *
    */
   receive(address: number[], callback: DeviceEventNotification): void;
@@ -408,7 +408,7 @@ export class ZBus {
    *
    * #### Example
    *
-   * Notifies of received combinations of address `1` in combination with the command `toggle`
+   * Notifies of received combinations of address `1` in combination with the event `toggle`
    * (or its numeric equivalent `0`)
    *
    * ```js
@@ -418,7 +418,7 @@ export class ZBus {
    *    zBus.transmit([1, 2, 3], 'on');
    * });
    * zBus.receive(15, 0, () => {
-   *    //This triggers for a reception of command 0 == 'toggle' on address 15
+   *    //This triggers for a reception of event 0 == 'toggle' on address 15
    *    console.log('Individual button pressed, switching entire group on');
    *    zBus.transmit([15, 16, 17], 'on');
    * });
@@ -426,7 +426,7 @@ export class ZBus {
    *
    * @param address Only events matching this address between `0` and `242` are received
    * @param command Only events matching this {@link Command} (name or `number` between `0` and `255`) are received
-   * @param callback This function is called when an event is received from the Z-Bus network. The notification contains the received {@link DeviceEvent} including address, command, and possibly a data packet
+   * @param callback This function is called when an event is received from the Z-Bus network. The notification contains the received {@link DeviceEvent} including address, event, and possibly a data packet
    *
    */
   receive(address: number, command: number | keyof typeof Command, callback: DeviceEventNotification): void;
@@ -449,14 +449,14 @@ export class ZBus {
    * Forwarding commands to a range of addresses:
    * ```js
    * function forwardCommand(event) {
-   *     zBus.transmit([0, 1, 2, 3, 4, 5, 6, 7, 8], event.command);
+   *     zBus.transmit([0, 1, 2, 3, 4, 5, 6, 7, 8], event.event);
    * }
    * zBus.receive(99, ['on', 'off'], forwardCommand);
    * ```
    *
    * @param address Only events matching this address or any of these addresses between `0` and `242` are received
    * @param command Only events matching this {@link Command} (name or `number` between `0` and `255`) or any of these commands are received
-   * @param callback This function is called when an event is received from the Z-Bus network. The notification contains the received {@link DeviceEvent} including address, command, and possibly a data packet
+   * @param callback This function is called when an event is received from the Z-Bus network. The notification contains the received {@link DeviceEvent} including address, event, and possibly a data packet
    *
    */
   receive(
@@ -546,9 +546,9 @@ export class ZBus {
    *
    * #### Step values
    *
-   * Step values can be defined by `first-last/step` and define a range and an execution interval. For example, to specify command execution every other hour, use `0-23/2`. This is equivalent to `0,2,4,6,8,10,12,14,16,18,20,22`.
+   * Step values can be defined by `first-last/step` and define a range and an execution interval. For example, to specify event execution every other hour, use `0-23/2`. This is equivalent to `0,2,4,6,8,10,12,14,16,18,20,22`.
    *
-   * If you specify `*∕step` the schedule will execute at any step interval. For example, the expression `*∕2` will also execute every other hour.
+   * If you specify `*∕step` the schedule will receive at any step interval. For example, the expression `*∕2` will also receive every other hour.
    *
    * #### Cron examples
    *

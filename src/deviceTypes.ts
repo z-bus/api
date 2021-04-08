@@ -1,9 +1,9 @@
-import { Command } from './command';
+/*import { Command } from './event';
 import { State } from './state';
 
 export interface Transition {
   name: keyof typeof Command;
-  command: number;
+  event: number;
   from?: State[];
   to: State[];
   for?: number[];
@@ -26,19 +26,19 @@ export const deviceTypes: DeviceType[] = [
     transitions: [
       {
         name: 'toggle',
-        command: Command.toggle,
+        event: Command.toggle,
         from: [State.ON, State.OFF],
         to: [State.ON, State.OFF],
         discrete: true,
       },
       {
         name: 'on',
-        command: Command.on,
+        event: Command.on,
         to: [State.ON],
       },
       {
         name: 'off',
-        command: Command.off,
+        event: Command.off,
         to: [State.OFF],
       },
     ],
@@ -50,29 +50,29 @@ export const deviceTypes: DeviceType[] = [
     transitions: [
       {
         name: 'up',
-        command: Command.up,
+        event: Command.up,
         to: [State.UP],
       },
       {
         name: 'up-stop',
-        command: Command['up-stop'],
+        event: Command['up-stop'],
         to: [State.UP, State.STOP],
         discrete: true,
       },
       {
         name: 'stop',
-        command: Command.down,
+        event: Command.down,
         to: [State.STOP],
       },
       {
         name: 'down-stop',
-        command: Command['down-stop'],
+        event: Command['down-stop'],
         to: [State.DOWN, State.STOP],
         discrete: true,
       },
       {
         name: 'down',
-        command: Command.down,
+        event: Command.down,
         to: [State.DOWN],
       },
     ],
@@ -85,36 +85,37 @@ export const deviceTypes: DeviceType[] = [
     transitions: [
       {
         name: 'up',
-        command: Command.up,
+        event: Command.up,
         to: [State.UP],
         for: [1, 2],
       },
       {
         name: 'up-stop',
-        command: Command['up-stop'],
+        event: Command['up-stop'],
         to: [State.UP, State.STOP],
         discrete: true,
         for: [0],
       },
       {
         name: 'stop',
-        command: Command.stop,
+        event: Command.stop,
         to: [State.STOP],
         for: [1, 2],
       },
       {
         name: 'down-stop',
-        command: Command['down-stop'],
+        event: Command['down-stop'],
         to: [State.DOWN, State.STOP],
         discrete: true,
         for: [0],
       },
       {
         name: 'down',
-        command: Command.down,
+        event: Command.down,
         to: [State.DOWN],
         for: [1, 2],
       },
     ],
   },
 ];
+*/

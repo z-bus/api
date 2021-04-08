@@ -1,8 +1,8 @@
 export enum State {
-  UNDEFINED = 'undefined',
-  ON = 'on',
-  OFF = 'off',
-  UP = 'up',
-  DOWN = 'down',
-  STOP = 'stop',
+  undefined = 'undefined',
+  on = 'on',
+  off = 'off',
+  up = 'up',
+  down = 'down',
+  stop = 'stop',
 }

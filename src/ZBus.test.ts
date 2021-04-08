@@ -60,13 +60,13 @@ test('invalid transmit throws', () => {
   }).toThrow(/address/);
   expect(() => {
     zBus.transmit(0, -1);
-  }).toThrow(/command/);
+  }).toThrow(/event/);
   expect(() => {
     zBus.transmit(0, 256);
-  }).toThrow(/command/);
+  }).toThrow(/event/);
   expect(() => {
     zBus.transmit(0, 'no-nii' as any);
-  }).toThrow(/command/);
+  }).toThrow(/event/);
   expect(() => {
     zBus.transmit(5, 'on', [0x03, 256]);
   }).toThrow(/data/);

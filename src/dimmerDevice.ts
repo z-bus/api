@@ -1,8 +1,9 @@
 import { DeviceEvent } from './deviceEvent';
 import { Transmitter } from './transmitter';
 import { Command } from './command';
-import { Device } from './device';
+import { Device, DeviceType } from './device';
 import { ZBus } from './ZBus';
+import { Machine, MachineDefinition } from './machine/machine';
 
 /**
  * This packs and unpacks `data` of a {@link DeviceEvent} to control a {@link DimmerDevice}
@@ -15,6 +16,7 @@ export class DimmerData {
    * * `1.0` is 100% on
    */
   readonly brightness: number;
+
   /**
    * Duration of a full dimming ramp (from 0 to 100%) between `0.04` and `160` seconds
    */
@@ -111,7 +113,7 @@ export class DimmerData {
  * Z-Bus dimmer device which adjusts brightness of a light
  * * [Dimmer](https://www.z-bus.de/produkte/dimmer) (DI05-300)
  */
-export class DimmerDevice implements Device, Transmitter {
+export class DimmerDevice implements Device, Transmitter, Machine {
   id?: string;
   name?: string;
   address: number[];
@@ -126,7 +128,15 @@ export class DimmerDevice implements Device, Transmitter {
    */
   brightness?: number;
 
-  type = 'dimmer';
+  /**
+   * Last known brightness of the Z-Bus {@link DimmerDevice} as a `number` between `0.0` and `1.0` in %
+   * * `0.0` was off
+   * * `0.5` was 50% brightness
+   * * `1.0` was 100% on
+   */
+  memory?: number;
+
+  type: DeviceType = 'dimmer';
   profile?: string;
 
   /**
@@ -199,7 +209,11 @@ export class DimmerDevice implements Device, Transmitter {
    * @param duration Duration of a full dimming ramp (from 0 to 100%) between `0.04` and `160` seconds
    */
   transmit(command: number | keyof typeof Command, brightness?: number, duration = 8): void {
-    const event = DimmerDevice.createEvent(this.address[0], command, brightness, duration);
+    const event = DimmerDevice.createEvent(
+      this.address[0],
+      command,
+      brightness !== undefined ? { brightness, duration, direction: 0 } : undefined,
+    );
     ZBus.getInstance().transmit(event.address, event.command, event.data);
   }
 
@@ -216,25 +230,68 @@ export class DimmerDevice implements Device, Transmitter {
    * ```js
    * { DimmerDevice } = require('@z-bus/api');
    * //Event to dim address 0 to 50%
-   * const event = DimmerDevice.createEvent(0, 'on', 0.5);
+   * const event = DimmerDevice.createEvent(0, 'on', {brightness: 0.5, duration: 8, direction: 0});
    * ```
    *
    * @param address Address of the controlled {@link DimmerDevice} between `0` and `242`
    * @param command {@link Command} used to control the {@link DimmerDevice} between `0` and `255`
-   * @param brightness Brightness of the {@link DimmerDevice} between `0.0` and `1.0` %
-   * @param duration Duration of a full dimming ramp (from 0 to 100%) between `0.04` and `160` seconds
+   * @param data may contain brightness and duration of the dimming ramp
    * @returns the new event
    */
-  static createEvent(
-    address: number,
-    command: number | keyof typeof Command,
-    brightness?: number,
-    duration = 8,
-  ): DeviceEvent {
-    return new DeviceEvent(
-      address,
-      command,
-      brightness !== undefined ? DimmerData.pack({ brightness, duration, direction: 0 }) : undefined,
-    );
+  static createEvent(address: number, command: number | keyof typeof Command, data?: DimmerData): DeviceEvent {
+    return new DeviceEvent(address, command, data !== undefined ? DimmerData.pack(data) : undefined);
   }
+
+  private static setBrightness(device: DimmerDevice, event: DeviceEvent) {
+    device.brightness = event.data ? DimmerData.unpack(event.data).brightness : 1.0;
+  }
+
+  private static resetBrightness(device: DimmerDevice) {
+    device.memory = device?.brightness;
+    device.brightness = 0.0;
+  }
+
+  private static restoreBrightness(device: DimmerDevice) {
+    device.brightness = device?.memory ?? 1.0;
+  }
+
+  static Machine: MachineDefinition = {
+    event: DimmerDevice.createEvent,
+    transitions: {
+      on: {
+        target: 'on',
+        command: 'on',
+        actions: [DimmerDevice.setBrightness],
+      },
+      off: {
+        command: 'off',
+        target: 'off',
+      },
+    },
+    states: {
+      undefined: {
+        default: 'on',
+      },
+      off: {
+        enter: [DimmerDevice.resetBrightness],
+        default: 'on',
+        transitions: {
+          toggle: {
+            command: 'toggle',
+            target: 'on',
+            actions: [DimmerDevice.restoreBrightness],
+          },
+        },
+      },
+      on: {
+        default: 'off',
+        transitions: {
+          toggle: {
+            command: 'toggle',
+            target: 'off',
+          },
+        },
+      },
+    },
+  };
 }

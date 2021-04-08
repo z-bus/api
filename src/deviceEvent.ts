@@ -20,7 +20,7 @@ export class DeviceEvent {
   readonly data?: number[];
 
   /**
-   * Create a DeviceEvent based on address, command, and optionally data
+   * Create a DeviceEvent based on address, event, and optionally data
    *
    * #### Example
    * ```js
@@ -36,14 +36,14 @@ export class DeviceEvent {
     //Set address
     this.address = address;
 
-    //Check command
+    //Check event
     if (typeof command === 'number' && (command < 0 || command > 255)) {
-      throw new Error('Unsupported command (must be 0 - 255)');
+      throw new Error('Unsupported event (must be 0 - 255)');
     }
     if (typeof command !== 'number' && !isCommand(command)) {
-      throw new Error('Unsupported command');
+      throw new Error('Unsupported event');
     }
-    //Set command
+    //Set event
     this.command = typeof command === 'number' ? command : Command[command];
 
     //In case the event has data…

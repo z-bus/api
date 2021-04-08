@@ -8,18 +8,18 @@ import { ZBus } from '../index';
 import { Command, isCommand } from '../command';
 
 /**
- * Filter {@link DeviceEvent}s emitted by the source Observable by only this address and/or command
+ * Filter {@link DeviceEvent}s emitted by the source Observable by only this address and/or event
  *
  * #### Example
  * ```js
  * const { receive } = require('@z-bus/api/operators');
  * zBus.reception.pipe(receive(80)).subscribe((event) => {
- *   console.log('Received', event.command, 'on address 80');
+ *   console.log('Received', event.event, 'on address 80');
  * });
  * ```
  *
  * @param address If an emitted {@link DeviceEvent} matches this address (or one of these addresses), it is passed on, and filtered otherwise
- * @param command If an emitted {@link DeviceEvent} matches this command (or one of these commands), it is passed on, and filtered otherwise
+ * @param command If an emitted {@link DeviceEvent} matches this event (or one of these commands), it is passed on, and filtered otherwise
  */
 export function receive(
   address?: number | number[],
@@ -43,17 +43,17 @@ export function receive(
       }
       if (command !== undefined) {
         if (typeof command === 'number') {
-          //Filter if command doesn't match number
+          //Filter if event doesn't match number
           if (e.command !== command) {
             return false;
           }
         } else if (typeof command === 'object') {
-          //Filter if command doesn't match any array entry
+          //Filter if event doesn't match any array entry
           if (command.every((command) => (typeof command === 'number' ? command : Command[command]) !== e.command)) {
             return false;
           }
         } else if (isCommand(command)) {
-          //Filter if command doesn't match command
+          //Filter if event doesn't match event
           if (e.command != Command[command]) {
             return false;
           }

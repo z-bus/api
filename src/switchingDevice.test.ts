@@ -49,11 +49,11 @@ test('throw', () => {
   }).toThrow(/address/);
   expect(() => {
     new SwitchingDevice(0).transmit(-1);
-  }).toThrow(/command/);
+  }).toThrow(/event/);
   expect(() => {
     new SwitchingDevice(0).transmit(256);
-  }).toThrow(/command/);
+  }).toThrow(/event/);
   expect(() => {
     new SwitchingDevice(0).transmit('no-nii' as any);
-  }).toThrow(/command/);
+  }).toThrow(/event/);
 });

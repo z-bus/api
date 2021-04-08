@@ -1,3 +1,7 @@
+import { State } from './state';
+
+export type DeviceType = 'switch' | 'dimmer' | 'directional';
+
 export interface Device {
   /**
    * Unique id that identifies the Z-Bus device in the database
@@ -18,7 +22,7 @@ export interface Device {
    * * `'dimmer'` for {@link DimmerDevice}
    * * `'directional'` for {@link DirectionalDevice}
    */
-  type?: string;
+  type: DeviceType;
   /**
    * Display profile for the Z-Bus device (determines state descriptions and symbols), e.g.:
    * * a lamp
@@ -28,9 +32,12 @@ export interface Device {
   profile?: string;
   /**
    * Current state the Z-Bus device is in, e.g.:
+   * * `'undefined'`
    * * `'on'`
    * * `'off'`
-   * * ...
+   * * `'up'`
+   * * `'down'`
+   * * `'stop'`
    */
-  state?: string;
+  state?: keyof typeof State;
 }

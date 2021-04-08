@@ -1,20 +1,22 @@
-import { Device } from './device';
+import { Device, DeviceType } from './device';
 import { Command } from './command';
 import { ZBus } from './ZBus';
 import { Transmitter } from './transmitter';
+import { Machine, MachineDefinition, StateDefinitions } from './machine/machine';
+import { DeviceEvent } from './deviceEvent';
 
 /**
  * Z-Bus switching device which controls a single light, heating valve, etc
  * * [Switching receiver / Schaltempfänger](https://www.z-bus.de/produkte/schaltempfaenger) (EM02-100)
  * * [Switching receiver with feedback / Schaltempfänger mit Rückmeldung](https://www.z-bus.de/produkte/schaltempfaenger-mit-rueckmeldung) (EM02-350)
  */
-export class SwitchingDevice implements Device, Transmitter {
+export class SwitchingDevice implements Device, Transmitter, Machine {
   id?: string;
   name?: string;
   address: number[];
   state?: 'on' | 'off';
 
-  type = 'switch';
+  type: DeviceType = 'switch';
   profile?: string;
 
   /**
@@ -22,7 +24,7 @@ export class SwitchingDevice implements Device, Transmitter {
    *
    * #### Example
    * ```js
-   * { SwitchingDevice } = require('@z-bus/api');
+   * const { SwitchingDevice } = require('@z-bus/api');
    * //Switches address 0 on
    * new SwitchingDevice(0).transmit('on');
    * ```
@@ -83,4 +85,40 @@ export class SwitchingDevice implements Device, Transmitter {
     //StM
   }
    */
+
+  static Machine: MachineDefinition = {
+    transitions: {
+      on: {
+        command: 'on',
+        target: 'on',
+      },
+      off: {
+        command: 'off',
+        target: 'off',
+      },
+    },
+    states: {
+      undefined: {
+        default: 'on',
+      },
+      off: {
+        default: 'on',
+        transitions: {
+          toggle: {
+            command: 'toggle',
+            target: 'on',
+          },
+        },
+      },
+      on: {
+        default: 'off',
+        transitions: {
+          toggle: {
+            command: 'toggle',
+            target: 'off',
+          },
+        },
+      },
+    },
+  };
 }

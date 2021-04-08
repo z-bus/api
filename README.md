@@ -22,7 +22,7 @@ The **package** is available on NPM via [`@z-bus/api`](https://www.npmjs.com/pac
 ## Hardware requirements
 
 * You'll need your home to be **equipped and hard-wired with a Z-Bus smart home system installation** available on [z-bus.com](https://www.z-bus.com).
-* You require the **[Interface](https://z-bus.de/produkte/interface) smart home server and IoT gateway** up and running at your home. It will execute the script and run your automations locally on the device, even without connection to the internet.
+* You require the **[Interface](https://z-bus.de/produkte/interface) smart home server and IoT gateway** up and running at your home. It will receive the script and run your automations locally on the device, even without connection to the internet.
 * **Internet connectivity** is however recommended for scripting (albeit it is also possible offline)
 
 ## Getting started
