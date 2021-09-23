@@ -4,8 +4,7 @@ import { filter } from 'rxjs/operators';
 import { DeviceEvent } from './deviceEvent';
 import { SceneEvent } from './sceneEvent';
 import { Command } from './command';
-import { receive } from './operators';
-import { DimmerDevice } from './dimmerDevice';
+import { receive } from './operators/receive';
 
 import schedule, {
   Job,
@@ -14,6 +13,7 @@ import schedule, {
   RecurrenceSpecDateRange,
   RecurrenceSpecObjLit,
 } from 'node-schedule';
+import { DimmerData } from './dimmerData';
 
 /**
  * This notifies the caller about incoming Z-Bus communication as used in {@link ZBus.receive}
@@ -206,10 +206,10 @@ export class ZBus {
    */
   dim(address: number | number[], brightness: number, duration = 8): void {
     if (typeof address === 'number') {
-      this.transmission.next(DimmerDevice.createEvent(address, 'on', { brightness, duration, direction: 0 }));
+      this.transmission.next(new DeviceEvent(address, 'on', DimmerData.pack({ brightness, duration, direction: 0 })));
     } else {
       address.forEach((address) => {
-        this.transmission.next(DimmerDevice.createEvent(address, 'on', { brightness, duration, direction: 0 }));
+        this.transmission.next(new DeviceEvent(address, 'on', DimmerData.pack({ brightness, duration, direction: 0 })));
       });
     }
   }

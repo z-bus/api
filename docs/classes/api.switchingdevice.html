@@ -92,6 +92,7 @@
 				<ul class="tsd-hierarchy">
 					<li><a href="../interfaces/api.device.html" class="tsd-signature-type" data-tsd-kind="Interface">Device</a></li>
 					<li><a href="../interfaces/api.transmitter.html" class="tsd-signature-type" data-tsd-kind="Interface">Transmitter</a></li>
+					<li><span class="tsd-signature-type">Machine</span></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -113,6 +114,9 @@
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="api.switchingdevice.html#profile" class="tsd-kind-icon">profile</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="api.switchingdevice.html#state" class="tsd-kind-icon">state</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="api.switchingdevice.html#type" class="tsd-kind-icon">type</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="api.switchingdevice.html#machine" class="tsd-kind-icon">Machine</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="api.switchingdevice.html#profiles" class="tsd-kind-icon">Profiles</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><a href="api.switchingdevice.html#description" class="tsd-kind-icon">description</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -146,7 +150,7 @@
 								<a href="#example" id="example" style="color: inherit; text-decoration: none;">
 									<h4>Example</h4>
 								</a>
-								<pre><code class="language-js"><span style="color: #000000">{ </span><span style="color: #001080">SwitchingDevice</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;@z-bus/api&#039;</span><span style="color: #000000">);</span>
+								<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">SwitchingDevice</span><span style="color: #000000"> } = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;@z-bus/api&#039;</span><span style="color: #000000">);</span>
 <span style="color: #008000">//Switches address 0 on</span>
 <span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">SwitchingDevice</span><span style="color: #000000">(</span><span style="color: #098658">0</span><span style="color: #000000">).</span><span style="color: #795E26">transmit</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;on&#039;</span><span style="color: #000000">);</span>
 </code></pre>
@@ -236,9 +240,12 @@
 						<div class="lead">
 							<p>Current state the Z-Bus device is in, e.g.:</p>
 							<ul>
+								<li><code>&#39;undefined&#39;</code></li>
 								<li><code>&#39;on&#39;</code></li>
 								<li><code>&#39;off&#39;</code></li>
-								<li>...</li>
+								<li><code>&#39;up&#39;</code></li>
+								<li><code>&#39;down&#39;</code></li>
+								<li><code>&#39;stop&#39;</code></li>
 							</ul>
 						</div>
 					</div>
@@ -246,7 +253,7 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="type" class="tsd-anchor"></a>
 					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = &#x27;switch&#x27;</span></div>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DeviceType</span><span class="tsd-signature-symbol"> = &#x27;switch&#x27;</span></div>
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/api.device.html">Device</a>.<a href="../interfaces/api.device.html#type">type</a></p>
 					</aside>
@@ -260,6 +267,27 @@
 							</ul>
 						</div>
 					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="machine" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> Machine</h3>
+					<div class="tsd-signature tsd-kind-icon">Machine<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MachineDefinition</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="profiles" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> Profiles</h3>
+					<div class="tsd-signature tsd-kind-icon">Profiles<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>description<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>profile<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>states<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>description<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>state<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>transitions<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{ </span>description<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>transition<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-static">
+					<a name="description" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagStatic">Static</span> description</h3>
+					<div class="tsd-signature tsd-kind-icon">description<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;Schaltempfänger (Licht, Heizung, ...)&quot;</span></div>
+					<aside class="tsd-sources">
+					</aside>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -329,7 +357,7 @@
 					<a name="transmit" class="tsd-anchor"></a>
 					<h3>transmit</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">transmit<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;toggle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;start&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;end&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;on&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;off&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">transmit<span class="tsd-signature-symbol">(</span>command<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;toggle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;start&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;end&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;on&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;off&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -344,7 +372,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>event: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;toggle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;start&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;end&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;on&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;off&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span></h5>
+									<h5>command: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;toggle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down-stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;start&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;end&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;on&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;off&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;up&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;down&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Command used to control the device between <code>0</code> and <code>255</code> (values see <a href="../enums/api.command.html">Command</a>)</p>
 									</div>
@@ -387,6 +415,9 @@
 					<li class=" tsd-kind-class tsd-parent-kind-module">
 						<a href="api.directionaldevice.html" class="tsd-kind-icon">Directional<wbr>Device</a>
 					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module">
+						<a href="api.directionalgroupdevice.html" class="tsd-kind-icon">Directional<wbr>Group<wbr>Device</a>
+					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-class tsd-parent-kind-module">
@@ -412,6 +443,15 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="api.switchingdevice.html#type" class="tsd-kind-icon">type</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="api.switchingdevice.html#machine" class="tsd-kind-icon">Machine</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="api.switchingdevice.html#profiles" class="tsd-kind-icon">Profiles</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-static">
+								<a href="api.switchingdevice.html#description" class="tsd-kind-icon">description</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="api.switchingdevice.html#off" class="tsd-kind-icon">off</a>
@@ -477,6 +517,9 @@
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
 			</ul>
 		</div>
 	</div>

@@ -20,7 +20,7 @@ import { ZBus } from './ZBus';
  *
  * These library functions are described in the {@link ZBus} class
  */
-export const zBus = ZBus.getInstance();
+export const zBus = ZBus?.getInstance();
 
 export { ZBus, DeviceEventNotification, SceneEventNotification } from './ZBus';
 
@@ -32,6 +32,8 @@ export { Transmitter } from './transmitter';
 export { Receiver } from './receiver';
 export { SwitchingDevice } from './switchingDevice';
 export { DirectionalDevice } from './directionalDevice';
-export { DimmerDevice, DimmerData } from './dimmerDevice';
+export { DirectionalGroupDevice } from './directionalGroupDevice';
+export { DimmerDevice } from './dimmerDevice';
+export { DimmerData } from './dimmerData';
 
 export { Command } from './command';

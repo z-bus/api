@@ -6,4 +6,5 @@
  * @module api/operators
  */
 
-export { receive, transmit } from './operators';
+export { transmit } from './transmit';
+export { receive } from './receive';

@@ -1,6 +1,6 @@
 import { State } from './state';
 
-export type DeviceType = 'switch' | 'dimmer' | 'directional';
+export type DeviceType = 'switch' | 'dimmer' | 'directional' | 'directional-group';
 
 export interface Device {
   /**

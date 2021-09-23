@@ -2,8 +2,7 @@ import { Device, DeviceType } from './device';
 import { Command } from './command';
 import { ZBus } from './ZBus';
 import { Transmitter } from './transmitter';
-import { Machine, MachineDefinition, StateDefinitions } from './machine/machine';
-import { DeviceEvent } from './deviceEvent';
+import { Machine, MachineDefinition } from './machine/machine';
 
 /**
  * Z-Bus switching device which controls a single light, heating valve, etc
@@ -17,6 +16,8 @@ export class SwitchingDevice implements Device, Transmitter, Machine {
   state?: 'on' | 'off';
 
   type: DeviceType = 'switch';
+  static description: 'Schaltempfänger (Licht, Heizung, ...)';
+
   profile?: string;
 
   /**
@@ -69,7 +70,7 @@ export class SwitchingDevice implements Device, Transmitter, Machine {
    * @param command Command used to control the device between `0` and `255` (values see {@link Command})
    */
   transmit(command: number | keyof typeof Command): void {
-    ZBus.getInstance().transmit(this.address[0], command);
+    ZBus?.getInstance().transmit(this.address[0], command);
   }
 
   /*
@@ -85,6 +86,35 @@ export class SwitchingDevice implements Device, Transmitter, Machine {
     //StM
   }
    */
+
+  static Profiles = [
+    {
+      profile: 'light',
+      description: 'Licht',
+      states: [
+        { state: 'on', description: 'ein' },
+        { state: 'off', description: 'aus' },
+      ],
+      transitions: [
+        { transition: 'toggle', description: 'umschalten' },
+        { transition: 'on', description: 'einschalten' },
+        { transition: 'off', description: 'ausschalten' },
+      ],
+    },
+    {
+      profile: 'heating',
+      description: 'Heizung',
+      states: [
+        { state: 'on', description: 'heizt' },
+        { state: 'off', description: 'heizt nicht' },
+      ],
+      transitions: [
+        { transition: 'toggle', description: 'umschalten' },
+        { transition: 'on', description: 'heizen' },
+        { transition: 'off', description: 'nicht heizen' },
+      ],
+    },
+  ];
 
   static Machine: MachineDefinition = {
     transitions: {

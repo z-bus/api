@@ -12,9 +12,12 @@ export class DirectionalDevice implements Device, Transmitter, Machine {
   id?: string;
   name?: string;
   address: number[];
+
   state?: 'up' | 'down' | 'stop';
+  memory?: 'up' | 'down' | 'stop';
 
   type: DeviceType = 'directional';
+  static description = 'Motor-Schaltempfänger (Jalousie, Rollladen, Fenster, ...)';
   profile?: string;
 
   /**
@@ -83,7 +86,7 @@ export class DirectionalDevice implements Device, Transmitter, Machine {
    * @param command Command used to control the device between `0` and `255` (values see {@link Command})
    */
   transmit(command: number | keyof typeof Command): void {
-    ZBus.getInstance().transmit(this.address[0], command);
+    ZBus?.getInstance().transmit(this.address[0], command);
   }
 
   /*
@@ -99,6 +102,41 @@ export class DirectionalDevice implements Device, Transmitter, Machine {
     //StM
   }
    */
+
+  static Profiles = [
+    {
+      profile: 'blind',
+      description: 'Jalousie',
+      states: [
+        { state: 'up', description: 'oben' },
+        { state: 'down', description: 'unten' },
+        { state: 'stop', description: 'gestoppt' },
+      ],
+      transitions: [
+        { transition: 'up', description: 'auf' },
+        { transition: 'up-stop', description: 'auf/stop' },
+        { transition: 'stop', description: 'stop' },
+        { transition: 'down-stop', description: 'ab/stop' },
+        { transition: 'down', description: 'ab' },
+      ],
+    },
+    {
+      profile: 'window',
+      description: 'Fenster',
+      states: [
+        { state: 'up', description: 'geöffnet' },
+        { state: 'down', description: 'geschlossen' },
+        { state: 'stop', description: 'gestoppt' },
+      ],
+      transitions: [
+        { transition: 'up', description: 'öffnen' },
+        { transition: 'up-stop', description: 'öffnen/stoppen' },
+        { transition: 'stop', description: 'stoppen' },
+        { transition: 'down-stop', description: 'schließen/stoppen' },
+        { transition: 'down', description: 'schließen' },
+      ],
+    },
+  ];
 
   static Machine: MachineDefinition = {
     transitions: {
@@ -135,25 +173,33 @@ export class DirectionalDevice implements Device, Transmitter, Machine {
       down: {
         default: 'stop',
         transitions: {
-          'down-stop': {
-            command: 'down-stop',
-            target: 'stop',
-          },
           'up-stop': {
             command: 'up-stop',
             target: 'up',
+          },
+          'down-stop': {
+            command: 'down-stop',
+            target: 'stop',
           },
         },
       },
       stop: {
         enter: [
-          (device) => {
+          (device: DirectionalDevice): void => {
             device.memory = device?.state;
           },
         ],
         default: [
-          { command: 'up', target: 'up', guard: (device) => device?.memory === 'down' },
-          { command: 'down', target: 'down', guard: (device) => device?.memory === 'up' },
+          {
+            command: 'up',
+            target: 'up',
+            guard: (device: DirectionalDevice): boolean => (device?.memory ?? 'down') === 'down',
+          },
+          {
+            command: 'down',
+            target: 'down',
+            guard: (device: DirectionalDevice): boolean => device?.memory === 'up',
+          },
         ],
         transitions: {
           'up-stop': {
